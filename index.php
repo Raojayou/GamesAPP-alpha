@@ -1,6 +1,9 @@
 <?php
     include_once 'config.php';
     include_once 'connectdb.php';
+    include_once 'helpers.php';
+
+    $queryResult = $pdo->query("SELECT * from distro");
 ?>
 <html lang="es">
 <head>
@@ -36,6 +39,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th>Logo</th>
             <th>Name</th>
             <th>Os Type</th>
             <th>Version</th>
@@ -45,46 +49,21 @@
         </tr>
         </thead>
         <tbody>
+            <?php while( $row = $queryResult->fetch(PDO::FETCH_ASSOC) ): ?>
         <tr>
-            <td>Debian</td>
-            <td>Linux, BSD</td>
-            <td>9</td>
-            <td>http://www.debian.org/</td>
-            <td><span class="glyphicon glyphicon-pencil editar" aria-hidden="true"></span></td>
-            <td><span class="glyphicon glyphicon-trash borrar" aria-hidden="true"></span></td>
+            <td><img src="<?=$row['image']?>" alt="Logo de <?=$row['name']?>"></td>
+            <td><?=$row['name']?></td>
+            <td><?=$row['based']?></td>
+            <td><?=$row['version']?></td>
+            <td><?=$row['main_page']?></td>
+            <td><a href="edit.php?id=<?=$row['id']?>" class="editar">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </a>
+            </td>
+            <td><a href="delete.php?id=<?=$row['id']?>" class="borrar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
         </tr>
-        <tr>
-            <td>Fedora</td>
-            <td>Linux</td>
-            <td>26</td>
-            <td>https://getfedora.org/</td>
-            <td><span class="glyphicon glyphicon-pencil editar" aria-hidden="true"></span></td>
-            <td><span class="glyphicon glyphicon-trash borrar" aria-hidden="true"></span></td>
-        </tr>
-        <tr>
-            <td>Ubuntu</td>
-            <td>Linux</td>
-            <td>17.10</td>
-            <td>https://www.ubuntu.com/</td>
-            <td><span class="glyphicon glyphicon-pencil editar" aria-hidden="true"></span></td>
-            <td><span class="glyphicon glyphicon-trash borrar" aria-hidden="true"></span></td>
-        </tr>
-        <tr>
-            <td>ArchLinux</td>
-            <td>Linux</td>
-            <td>2017.10</td>
-            <td>http://www.archlinux.org/</td>
-            <td><span class="glyphicon glyphicon-pencil editar" aria-hidden="true"></span></td>
-            <td><span class="glyphicon glyphicon-trash borrar" aria-hidden="true"></span></td>
-        </tr>
-        <tr>
-            <td>FreeBSD</td>
-            <td>BSD</td>
-            <td>10.4</td>
-            <td>http://www.freebsd.org/</td>
-            <td><span class="glyphicon glyphicon-pencil editar" aria-hidden="true"></span></td>
-            <td><span class="glyphicon glyphicon-trash borrar" aria-hidden="true"></span></td>
-        </tr>
+        <?php endwhile; ?>
+
         </tbody>
     </table>
 </div><!-- /.container -->

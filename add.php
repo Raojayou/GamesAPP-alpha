@@ -1,12 +1,99 @@
 <?php
 include_once 'config.php';
 include_once 'connectdb.php';
+include_once 'helpers.php';
+
+$errors = array();
 
 if( !empty($_POST)){
-    echo '<pre>';
-    print_r($_POST);
-    echo '</pre>';
-    die();
+
+//    echo '<pre>';
+//    print_r($_POST);
+//    echo '</pre>';
+
+    $name = htmlspecialchars(trim($_POST['distroName']));
+    $image = htmlspecialchars(trim($_POST['image']));
+    $ostype = htmlspecialchars(trim($_POST['ostype']));
+    $basedon = $_POST['basedon'] ?? array();
+    $origin = htmlspecialchars(trim($_POST['origin']));
+    $architecture = $_POST['architecture'] ?? array();
+    $desktop = $_POST['desktop'] ?? array();
+    $category = $_POST['category'] ?? array();
+    $status = htmlspecialchars(trim($_POST['status']));
+    $version = htmlspecialchars(trim($_POST['version']));
+    $web = htmlspecialchars(trim($_POST['web']));
+    $forum = htmlspecialchars(trim($_POST['forum']));
+    $doc = htmlspecialchars(trim($_POST['doc']));
+    $errorTracker = htmlspecialchars(trim($_POST['errorTracker']));
+    $description = htmlspecialchars(trim($_POST['description']));
+
+    // Comprobar que se han enviado los campos requeridos
+    // Name, OsType, Origin, BasedOn, Architectura, Desktop, Category, Web, Description
+    if( $name == "" ){
+        $errors['nameDistro']['required'] = "El campo nombre es requerido";
+    }
+
+    if( $ostype == "" ){
+        $errors['ostype']['required'] = "El campo Os Type es requerido";
+    }
+
+    if( !isset($_POST['basedon']) ){
+        $errors['basedon']['required'] = "El campo based on debe tener al menos una opción seleccionada";
+    }
+    if( !isset($_POST['origin']) ){
+        $errors['origin']['required'] = "El campo origin debe tener al menos una opción seleccionada";
+    }
+
+    if( !isset($_POST['architecture']) ){
+        $errors['architecture']['required'] = "El campo architecture debe tener al menos una opción seleccionada";
+    }
+
+    if( !isset($_POST['desktop']) ){
+        $errors['desktop']['required'] = "El campo desktop debe tener al menos una opción seleccionada";
+    }
+
+    if( !isset($_POST['category']) ){
+        $errors['category']['required'] = "El campo Category es requerido";
+    }
+
+    if( $status == "" ){
+        $errors['status']['required'] = "El campo Status es requerido";
+    }
+    if( $web == "" ){
+        $errors['web']['required'] = "El campo Category es requerido";
+    }
+
+    if( $description == "" ){
+        $errors['description']['required'] = "El campo Description es requerido";
+    }
+
+    if ( empty($errors) ){
+        $sql = "INSERT INTO distro (image, name, ostype, based, origin, arch, desktop, category, status, version, main_page, doc, forums, error_tracker, description) VALUES (:image, :name, :ostype, :based, :origin, :arch, :desktop, :category, :status, :version, :main_page, :doc, :forums, :error_tracker, :description)";
+
+        $result = $pdo->prepare($sql);
+
+        $result->execute([
+            'image'         => $image,
+            'name'          => $name,
+            'ostype'        => $ostype,
+            'based'         => convierteCadena( $basedon),
+            'origin'        => $origin,
+            'arch'          => convierteCadena( $architecture),
+            'desktop'       => convierteCadena( $desktop),
+            'category'      => convierteCadena( $category),
+            'status'        => $status,
+            'version'       => $version,
+            'main_page'     => $web,
+            'doc'           => $doc,
+            'forums'        => $forum,
+            'error_tracker' => $errorTracker,
+            'description'   => $description
+        ]);
+
+        // Mando la aplicación a la página de inicio
+
+        header('Location: index.php');
+    }
 }
 
 ?>
@@ -42,10 +129,16 @@ if( !empty($_POST)){
 <div class="container">
     <h1>Add New Distro</h1>
     <form action="" method="post">
-        <div class="form-group">
+        <div class="form-group <?php echo (isset($errors['nameDistro']['required'])?"has-error":""); ?>">
             <label for="inputName">Name</label>
             <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name">
         </div>
+        <?php if( isset($errors['nameDistro']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['nameDistro']['required']?></strong>
+            </div>
+        <?php endif; ?>
         <div class="form-group">
             <label for="inputImage">Image</label>
             <input type="text" class="form-control" id="inputImage" name="image" placeholder="Distro Image URL">
@@ -98,8 +191,8 @@ if( !empty($_POST)){
             </select>
         </div>
         <div class="form-group">
-            <label for="inputBasedOn">Origin</label>
-            <select class="form-control" name="origin">
+            <label for="inputOrigin">Origin</label>
+            <select class="form-control" name="origin" id="inputOrigin">
                 <option selected value="All">All</option>
                 <option value="Algeria">Algeria</option>
                 <option value="Argentina">Argentina</option>
@@ -178,7 +271,7 @@ if( !empty($_POST)){
         </div>
         <div class="form-group">
             <label for="inputArchitecture">Architecture</label>
-            <select class="form-control" name="architecture" id="inputArchitecture">
+            <select class="form-control" name="architecture[]" id="inputArchitecture" multiple>
                 <option selected value="All">All</option>
                 <option value="acorn26">acorn26</option>
                 <option value="acorn32">acorn32</option>
@@ -253,7 +346,7 @@ if( !empty($_POST)){
         </div>
         <div class="form-group">
             <label for="inputDesktop">Desktop</label>
-            <select class="form-control" name="desktop" id="inputDesktop">
+            <select class="form-control" name="desktop[]" id="inputDesktop" multiple>
             <option selected value="All">All</option>
             <option value="No desktop">No desktop</option>
             <option value="AfterStep">AfterStep</option>
@@ -311,7 +404,7 @@ if( !empty($_POST)){
 
         <div class="form-group">
             <label for="inputCategory">Category</label>
-            <select class="form-control" name="category" id="inputCategory">
+            <select class="form-control" name="category[]" id="inputCategory" multiple>
             <option selected value="All">All</option>
             <option value="Beginners">Beginners</option>
             <option value="Clusters">Clusters</option>
@@ -368,7 +461,7 @@ if( !empty($_POST)){
         </div>
         <div class="form-group">
             <label for="inputError">Error Tracker</label>
-            <input type="text" class="form-control" id="inputError" name="error" placeholder="Distro Official Error Tracker Website">
+            <input type="text" class="form-control" id="inputError" name="errorTracker" placeholder="Distro Official Error Tracker Website">
         </div>
         <div class="form-group">
             <label for="inputDescription">Description</label>
@@ -377,5 +470,8 @@ if( !empty($_POST)){
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 </div><!-- /.container -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>
