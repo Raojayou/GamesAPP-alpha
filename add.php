@@ -4,13 +4,10 @@ include_once 'connectdb.php';
 include_once 'helpers.php';
 
 $errors = array();
+$error = false;
 
 if( !empty($_POST)){
-
-//    echo '<pre>';
-//    print_r($_POST);
-//    echo '</pre>';
-
+    // Extraemos los datos enviados por POST
     $name = htmlspecialchars(trim($_POST['distroName']));
     $image = htmlspecialchars(trim($_POST['image']));
     $ostype = htmlspecialchars(trim($_POST['ostype']));
@@ -68,7 +65,9 @@ if( !empty($_POST)){
     }
 
     if ( empty($errors) ){
-        $sql = "INSERT INTO distro (image, name, ostype, based, origin, arch, desktop, category, status, version, main_page, doc, forums, error_tracker, description) VALUES (:image, :name, :ostype, :based, :origin, :arch, :desktop, :category, :status, :version, :main_page, :doc, :forums, :error_tracker, :description)";
+        // Si no tengo errores de validación
+        // Guardo en la BD
+        $sql = "INSERT INTO distro (image, name, ostype, based, origin, arch, desktop, category, status, version, main_page, doc, forums, error_tracker, description, created_at) VALUES (:image, :name, :ostype, :based, :origin, :arch, :desktop, :category, :status, :version, :main_page, :doc, :forums, :error_tracker, :description, NOW())";
 
         $result = $pdo->prepare($sql);
 
@@ -93,6 +92,9 @@ if( !empty($_POST)){
         // Mando la aplicación a la página de inicio
 
         header('Location: index.php');
+    }else{
+        // Si tengo errores de validación
+        $error = true;
     }
 }
 
@@ -131,7 +133,7 @@ if( !empty($_POST)){
     <form action="" method="post">
         <div class="form-group <?php echo (isset($errors['nameDistro']['required'])?"has-error":""); ?>">
             <label for="inputName">Name</label>
-            <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name">
+                <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name" value="<?=(!empty($errors)?$name:"")?>">
         </div>
         <?php if( isset($errors['nameDistro']) ): ?>
             <div class="alert alert-danger alert-dismissible" role="alert">

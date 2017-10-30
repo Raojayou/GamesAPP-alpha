@@ -3,7 +3,7 @@
     include_once 'connectdb.php';
     include_once 'helpers.php';
 
-    $queryResult = $pdo->query("SELECT * from distro");
+    $queryResult = $pdo->query("SELECT * from distro ORDER BY id DESC");
 ?>
 <html lang="es">
 <head>
