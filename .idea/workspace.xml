@@ -4,8 +4,6 @@
     <list default="true" id="4b2e5d32-3d9f-4714-b997-2813944cd48f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/add.php" afterPath="$PROJECT_DIR$/add.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/arrays.php" afterPath="$PROJECT_DIR$/arrays.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/helpers.php" afterPath="$PROJECT_DIR$/helpers.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,10 +44,10 @@
       <file leaf-file-name="add.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/add.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="168" column="67" lean-forward="false" selection-start-line="168" selection-start-column="63" selection-end-line="168" selection-end-column="67" />
+            <state relative-caret-position="251">
+              <caret line="168" column="68" lean-forward="false" selection-start-line="168" selection-start-column="68" selection-end-line="168" selection-end-column="68" />
               <folding>
-                <marker date="1509468764000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
+                <marker date="1509477102000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
               </folding>
             </state>
           </provider>
@@ -190,24 +188,25 @@
       <workItem from="1509297938294" duration="340000" />
       <workItem from="1509305626508" duration="3036000" />
       <workItem from="1509374655261" duration="5629000" />
-      <workItem from="1509460428374" duration="8080000" />
+      <workItem from="1509460428374" duration="8820000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33511000" />
+    <option name="totallyTimeSpent" value="34251000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23962805" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13948497" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26947704" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15307583" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -261,7 +260,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1509468764000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
+            <marker date="1509477102000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
           </folding>
         </state>
       </provider>
@@ -285,7 +284,7 @@
           <caret line="159" column="50" lean-forward="false" selection-start-line="159" selection-start-column="50" selection-end-line="159" selection-end-column="50" />
           <caret line="160" column="54" lean-forward="false" selection-start-line="160" selection-start-column="54" selection-end-line="160" selection-end-column="54" />
           <folding>
-            <marker date="1509468764000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
+            <marker date="1509477102000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
           </folding>
         </state>
       </provider>
@@ -295,7 +294,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1509468764000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
+            <marker date="1509477102000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
           </folding>
         </state>
       </provider>
@@ -346,7 +345,7 @@
         <state relative-caret-position="2489">
           <caret line="131" column="94" lean-forward="false" selection-start-line="131" selection-start-column="89" selection-end-line="131" selection-end-column="94" />
           <folding>
-            <marker date="1509468764000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
+            <marker date="1509477102000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
           </folding>
         </state>
       </provider>
@@ -397,7 +396,7 @@
         <state relative-caret-position="1197">
           <caret line="63" column="56" lean-forward="false" selection-start-line="63" selection-start-column="56" selection-end-line="63" selection-end-column="56" />
           <folding>
-            <marker date="1509468764000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
+            <marker date="1509477102000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
           </folding>
         </state>
       </provider>
@@ -509,10 +508,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/add.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="168" column="67" lean-forward="false" selection-start-line="168" selection-start-column="63" selection-end-line="168" selection-end-column="67" />
+        <state relative-caret-position="251">
+          <caret line="168" column="68" lean-forward="false" selection-start-line="168" selection-start-column="68" selection-end-line="168" selection-end-column="68" />
           <folding>
-            <marker date="1509468764000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
+            <marker date="1509477102000" expanded="true" signature="2782:3103" ph="INSERT INTO distro... " />
           </folding>
         </state>
       </provider>

@@ -166,7 +166,7 @@ $error = !empty($errors)?true:false;
         </div>
         <div class="form-group<?php echo (isset($errors['ostype']['required'])?" has-error":""); ?>">
             <label for="inputOsType">Os Type</label>
-            <?=generarSelect($osTypeValues, $ostype, "ostype", true)?>
+            <?=generarSelect($osTypeValues, $ostype, "ostype", false)?>
         </div>
         <?php if( isset($errors['ostype']) ): ?>
             <div class="alert alert-danger alert-dismissible" role="alert">
