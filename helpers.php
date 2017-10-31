@@ -11,12 +11,23 @@
         return implode(", ", $array);
     }
 
+    /**
+     * Este helper sirve para generar los selects dinámicamente.
+     *
+     * @param $listaValores Array con los valores que debe mostrar el select
+     * @param $seleccionados Array con los valores que debe seleccionar el select
+     * @param $name String nombre de la clave que se pasará en el array $_POST
+     * @param bool $multiple Bool Si el select va a admitir selección múltiple o no.
+     *
+     * @return string Código HTML del select
+     */
     function generarSelect($listaValores, $seleccionados, $name, $multiple = false){
-        $salida = '<select class="form-control" name="'.$name.'" '. ($multiple?"multiple":"") .'>';
+        $salida = '<select class="form-control" name="'.$name.($multiple?"[]":""). '"' . ($multiple?"multiple":"") .'>';
 
-        if (!is_array($seleccionados)){
+        if( !is_array($seleccionados) ){
             $seleccionados = (array) $seleccionados;
         }
+
         foreach ($listaValores as $valor){
             $selected = "";
             if( in_array($valor, $seleccionados) ) $selected = " selected";
