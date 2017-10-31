@@ -2,15 +2,32 @@
 include_once 'config.php';
 include_once 'connectdb.php';
 include_once 'helpers.php';
+include_once 'arrays.php';
 
 $errors = array();
 $error = false;
+
+$name = "";
+$image = "";
+$ostype = [] ;
+$basedon = [];
+$origin = "";
+$architecture = [];
+$desktop = [];
+$category = [];
+$status = "";
+$version = "";
+$web = "";
+$forum = "";
+$doc = "";
+$errorTracker = "";
+$description = "";
 
 if( !empty($_POST)){
     // Extraemos los datos enviados por POST
     $name = htmlspecialchars(trim($_POST['distroName']));
     $image = htmlspecialchars(trim($_POST['image']));
-    $ostype = htmlspecialchars(trim($_POST['ostype']));
+    $ostype = $_POST['ostype'] ?? array();
     $basedon = $_POST['basedon'] ?? array();
     $origin = htmlspecialchars(trim($_POST['origin']));
     $architecture = $_POST['architecture'] ?? array();
@@ -25,7 +42,7 @@ if( !empty($_POST)){
     $description = htmlspecialchars(trim($_POST['description']));
 
     // Comprobar que se han enviado los campos requeridos
-    // Name, OsType, Origin, BasedOn, Architectura, Desktop, Category, Web, Description
+    // Name, OsType, Origin, BasedOn, Architectura, Desktop, Category, Status, Web, Description
     if( $name == "" ){
         $errors['nameDistro']['required'] = "El campo nombre es requerido";
     }
@@ -98,6 +115,8 @@ if( !empty($_POST)){
     }
 }
 
+$error = !empty($errors)?true:false;
+
 ?>
 <html lang="es">
 <head>
@@ -131,9 +150,9 @@ if( !empty($_POST)){
 <div class="container">
     <h1>Add New Distro</h1>
     <form action="" method="post">
-        <div class="form-group <?php echo (isset($errors['nameDistro']['required'])?"has-error":""); ?>">
+        <div class="form-group<?php echo (isset($errors['nameDistro']['required'])?" has-error":""); ?>">
             <label for="inputName">Name</label>
-                <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name" value="<?=(!empty($errors)?$name:"")?>">
+                <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name" value="<?=($error?$name:"")?>">
         </div>
         <?php if( isset($errors['nameDistro']) ): ?>
             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -143,18 +162,19 @@ if( !empty($_POST)){
         <?php endif; ?>
         <div class="form-group">
             <label for="inputImage">Image</label>
-            <input type="text" class="form-control" id="inputImage" name="image" placeholder="Distro Image URL">
+            <input type="text" class="form-control" id="inputImage" name="image" placeholder="Distro Image URL" value="<?=($error?$image:"")?>">
         </div>
-        <div class="form-group">
+        <div class="form-group<?php echo (isset($errors['ostype']['required'])?" has-error":""); ?>">
             <label for="inputOsType">Os Type</label>
-            <select class="form-control" name="ostype">
-                <option value="Linux">Linux</option>
-                <option value="BSD">BSD</option>
-                <option value="Solaris">Solaris</option>
-                <option value="Other">Other</option>
-            </select>
+            <?=generarSelect($osTypeValues, $ostype, "ostype")?>
         </div>
-        <div class="form-group">
+        <?php if( isset($errors['ostype']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['ostype']['required']?></strong>
+            </div>
+        <?php endif; ?>
+        <div class="form-group<?php echo (isset($errors['basedon']['required'])?" has-error":""); ?>">
             <label for="inputBasedOn">Based On</label>
             <select class="form-control" name="basedon[]" id="inputBasedOn" multiple>
                 <option selected value="All">All</option>
@@ -192,7 +212,13 @@ if( !empty($_POST)){
                 <option value="Zenwalk">Zenwalk</option>
             </select>
         </div>
-        <div class="form-group">
+        <?php if( isset($errors['basedon']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['basedon']['required']?></strong>
+            </div>
+        <?php endif; ?>
+        <div class="form-group<?php echo (isset($errors['origin']['required'])?" has-error":""); ?>">
             <label for="inputOrigin">Origin</label>
             <select class="form-control" name="origin" id="inputOrigin">
                 <option selected value="All">All</option>
@@ -271,7 +297,13 @@ if( !empty($_POST)){
                 <option value="Vietnam">Vietnam</option>
             </select>
         </div>
-        <div class="form-group">
+        <?php if( isset($errors['origin']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['origin']['required']?></strong>
+            </div>
+        <?php endif; ?>
+        <div class="form-group<?php echo (isset($errors['architecture']['required'])?" has-error":""); ?>">
             <label for="inputArchitecture">Architecture</label>
             <select class="form-control" name="architecture[]" id="inputArchitecture" multiple>
                 <option selected value="All">All</option>
@@ -346,7 +378,13 @@ if( !empty($_POST)){
                 <option value="zaurus">zaurus</option>
             </select>
         </div>
-        <div class="form-group">
+        <?php if( isset($errors['architecture']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['architecture']['required']?></strong>
+            </div>
+        <?php endif; ?>
+        <div class="form-group<?php echo (isset($errors['desktop']['required'])?" has-error":""); ?>">
             <label for="inputDesktop">Desktop</label>
             <select class="form-control" name="desktop[]" id="inputDesktop" multiple>
             <option selected value="All">All</option>
@@ -403,8 +441,13 @@ if( !empty($_POST)){
             <option value="Xfce">Xfce</option>
         </select>
         </div>
-
-        <div class="form-group">
+        <?php if( isset($errors['desktop']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['desktop']['required']?></strong>
+            </div>
+        <?php endif; ?>
+        <div class="form-group<?php echo (isset($errors['category']['required'])?" has-error":""); ?>">
             <label for="inputCategory">Category</label>
             <select class="form-control" name="category[]" id="inputCategory" multiple>
             <option selected value="All">All</option>
@@ -437,7 +480,13 @@ if( !empty($_POST)){
             <option value="Thin Client">Thin Client</option>
         </select>
         </div>
-        <div class="form-group">
+        <?php if( isset($errors['category']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['category']['required']?></strong>
+            </div>
+        <?php endif; ?>
+        <div class="form-group<?php echo (isset($errors['status']['required'])?" has-error":""); ?>">
             <label for="inputStatus">Status</label>
             <select class="form-control" name="status" id="inputStatus">
                 <option>Active</option>
@@ -445,30 +494,48 @@ if( !empty($_POST)){
                 <option>Discontinued</option>
             </select>
         </div>
+        <?php if( isset($errors['status']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['status']['required']?></strong>
+            </div>
+        <?php endif; ?>
         <div class="form-group">
             <label for="inputVersion">Version</label>
-            <input type="text" class="form-control" id="inputVersion" name="version" placeholder="Distro Version">
+            <input type="text" class="form-control" id="inputVersion" name="version" placeholder="Distro Version" value="<?=($error?$version:"")?>">
         </div>
-        <div class="form-group">
+        <div class="form-group<?php echo (isset($errors['web']['required'])?" has-error":""); ?>">
             <label for="inputWeb">Web</label>
-            <input type="text" class="form-control" id="inputWeb" name="web" placeholder="Distro Official Web">
+            <input type="text" class="form-control" id="inputWeb" name="web" placeholder="Distro Official Web" value="<?=($error?$web:"")?>">
         </div>
+        <?php if( isset($errors['web']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" value="<?=($error?$name:"")?>"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['web']['required']?></strong>
+            </div>
+        <?php endif; ?>
         <div class="form-group">
             <label for="inputDoc">Doc</label>
-            <input type="text" class="form-control" id="inputDoc" name="doc" placeholder="Official Doc Website">
+            <input type="text" class="form-control" id="inputDoc" name="doc" placeholder="Official Doc Website" value="<?=($error?$doc:"")?>">
         </div>
         <div class="form-group">
             <label for="inputForum">Forums</label>
-            <input type="text" class="form-control" id="inputForum" name="forum" placeholder="Distro Official Forum Website">
+            <input type="text" class="form-control" id="inputForum" name="forum" placeholder="Distro Official Forum Website" value="<?=($error?$forum:"")?>">
         </div>
         <div class="form-group">
             <label for="inputError">Error Tracker</label>
-            <input type="text" class="form-control" id="inputError" name="errorTracker" placeholder="Distro Official Error Tracker Website">
+            <input type="text" class="form-control" id="inputError" name="errorTracker" placeholder="Distro Official Error Tracker Website" value="<?=($error?$errorTracker:"")?>">
         </div>
-        <div class="form-group">
+        <div class="form-group<?php echo (isset($errors['web']['required'])?" has-error":""); ?>">
             <label for="inputDescription">Description</label>
-            <textarea class="form-control" name="description" id="inputDescription" rows="5"></textarea>
+            <textarea class="form-control" name="description" id="inputDescription" rows="5"><?=($error?$description:"")?></textarea>
         </div>
+        <?php if( isset($errors['description']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['description']['required']?></strong>
+            </div>
+        <?php endif; ?>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 </div><!-- /.container -->
