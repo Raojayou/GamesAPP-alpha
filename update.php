@@ -3,12 +3,27 @@ include_once 'config.php';
 include_once 'connectdb.php';
 include_once 'helpers.php';
 include_once 'arrays.php';
+include_once 'dbhelpers.php';
+
+$id = $_REQUEST['id'];
+
+// Recuperar datos
+$distro = getDistro($id, $pdo);
+
+if( !$distro ){
+    header('Location: index.php');
+}
+
+$distro['basedon'] = convierteArray($distro['basedon']);
+$distro['arch'] = convierteArray($distro['arch']);
+$distro['desktop'] = convierteArray($distro['desktop']);
+$distro['category'] = convierteArray($distro['category']);
 
 $errors = array();  // Array donde se guardaran los errores de validación
 $error = false;     // Será true si hay errores de validación.
 
 // Se construye un array asociativo $distro con todas sus claves vacías
-$distro = array_fill_keys(["name","image", "ostype", "basedon", "origin", "arch", "desktop", "category", "status", "version", "web", "forums", "doc", "errorTracker", "description"], "");
+
 
 if( !empty($_POST)){
     // Extraemos los datos enviados por POST
@@ -25,7 +40,7 @@ if( !empty($_POST)){
     $distro['web'] = htmlspecialchars(trim($_POST['web']));
     $distro['forums'] = htmlspecialchars(trim($_POST['forum']));
     $distro['doc'] = htmlspecialchars(trim($_POST['doc']));
-    $distro['errorTracker'] = htmlspecialchars(trim($_POST['errorTracker']));
+    $distro['error_tracker'] = htmlspecialchars(trim($_POST['errorTracker']));
     $distro['description'] = htmlspecialchars(trim($_POST['description']));
 
     // Comprobar que se han enviado los campos requeridos
@@ -46,7 +61,7 @@ if( !empty($_POST)){
     }
 
     if( empty($distro['arch']) ){
-        $errors['arch']['required'] = "El campo architecture debe tener al menos una opción seleccionada";
+        $errors['architecture']['required'] = "El campo architecture debe tener al menos una opción seleccionada";
     }
 
     if( empty($distro['desktop']) ){
@@ -69,14 +84,14 @@ if( !empty($_POST)){
     }
 
     if ( empty($errors) ){
-        //dameDato($distro);
         // Si no tengo errores de validación
         // Guardo en la BD
-        $sql = "INSERT INTO distro (image, name, ostype, basedon, origin, arch, desktop, category, status, version, web, doc, forums, error_tracker, description, created_at) VALUES (:image, :name, :ostype, :basedon, :origin, :arch, :desktop, :category, :status, :version, :web, :doc, :forums, :error_tracker, :description, NOW())";
+        $sql = "UPDATE distro SET image = :image, name = :name, ostype = :ostype, basedon = :basedon, origin = :origin, arch = :arch, desktop = :desktop, category = :category, status = :status, version = :version, web = :web, doc = :doc, forums = :forums, error_tracker = :error_tracker, description = :description, updated_at = NOW() WHERE id = :id LIMIT 1";
 
         $result = $pdo->prepare($sql);
 
         $result->execute([
+            'id'            => $id,
             'image'         => $distro['image'],
             'name'          => $distro['name'],
             'ostype'        => $distro['ostype'],
@@ -90,7 +105,7 @@ if( !empty($_POST)){
             'web'           => $distro['web'],
             'doc'           => $distro['doc'],
             'forums'        => $distro['forums'],
-            'error_tracker' => $distro['errorTracker'],
+            'error_tracker' => $distro['error_tracker'],
             'description'   => $distro['description']
         ]);
 
@@ -139,7 +154,7 @@ $error = !empty($errors)?true:false;
     <form action="" method="post">
         <div class="form-group<?php echo (isset($errors['nameDistro']['required'])?" has-error":""); ?>">
             <label for="inputName">Name</label>
-                <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name" value="<?=$distro['name']?>">
+            <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name" value="<?=$distro['name']?>">
         </div>
         <?=generarAlert($errors, 'name')?>
         <div class="form-group">
@@ -148,7 +163,7 @@ $error = !empty($errors)?true:false;
         </div>
         <div class="form-group<?php echo (isset($errors['ostype']['required'])?" has-error":""); ?>">
             <label for="inputOsType">Os Type</label>
-            <?=generarSelect($osTypeValues, $distro['ostype'], "ostype", false)?>
+            <?=generarSelect($osTypeValues, $distro['ostype'], "ostype")?>
         </div>
         <?=generarAlert($errors, 'ostype')?>
         <div class="form-group<?php echo (isset($errors['basedon']['required'])?" has-error":""); ?>">
@@ -165,22 +180,42 @@ $error = !empty($errors)?true:false;
             <label for="inputArchitecture">Architecture</label>
             <?=generarSelect($archValues, $distro['arch'], "architecture", true);?>
         </div>
-        <?=generarAlert($errors, 'arch')?>
+        <?php if( isset($errors['architecture']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['architecture']['required']?></strong>
+            </div>
+        <?php endif; ?>
         <div class="form-group<?php echo (isset($errors['desktop']['required'])?" has-error":""); ?>">
             <label for="inputDesktop">Desktop</label>
             <?=generarSelect($desktopValues, $distro['desktop'], "desktop", true)?>
         </div>
-        <?=generarAlert($errors, 'desktop')?>
+        <?php if( isset($errors['desktop']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['desktop']['required']?></strong>
+            </div>
+        <?php endif; ?>
         <div class="form-group<?php echo (isset($errors['category']['required'])?" has-error":""); ?>">
             <label for="inputCategory">Category</label>
             <?=generarSelect($categoryValues, $distro['category'], "category", true)?>
         </div>
-        <?=generarAlert($errors, 'category')?>
+        <?php if( isset($errors['category']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['category']['required']?></strong>
+            </div>
+        <?php endif; ?>
         <div class="form-group<?php echo (isset($errors['status']['required'])?" has-error":""); ?>">
             <label for="inputStatus">Status</label>
             <?=generarSelect($statusValues, $distro['status'], "status")?>
         </div>
-        <?=generarAlert($errors, 'status')?>
+        <?php if( isset($errors['status']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['status']['required']?></strong>
+            </div>
+        <?php endif; ?>
         <div class="form-group">
             <label for="inputVersion">Version</label>
             <input type="text" class="form-control" id="inputVersion" name="version" placeholder="Distro Version" value="<?=$distro['version']?>">
@@ -189,7 +224,12 @@ $error = !empty($errors)?true:false;
             <label for="inputWeb">Web</label>
             <input type="text" class="form-control" id="inputWeb" name="web" placeholder="Distro Official Web" value="<?=$distro['web']?>">
         </div>
-        <?=generarAlert($errors, 'web')?>
+        <?php if( isset($errors['web']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['web']['required']?></strong>
+            </div>
+        <?php endif; ?>
         <div class="form-group">
             <label for="inputDoc">Doc</label>
             <input type="text" class="form-control" id="inputDoc" name="doc" placeholder="Official Doc Website" value="<?=$distro['doc']?>">
@@ -200,14 +240,20 @@ $error = !empty($errors)?true:false;
         </div>
         <div class="form-group">
             <label for="inputError">Error Tracker</label>
-            <input type="text" class="form-control" id="inputError" name="errorTracker" placeholder="Distro Official Error Tracker Website" value="<?=$distro['errorTracker']?>">
+            <input type="text" class="form-control" id="inputError" name="errorTracker" placeholder="Distro Official Error Tracker Website" value="<?=$distro['error_tracker']?>">
         </div>
         <div class="form-group<?php echo (isset($errors['web']['required'])?" has-error":""); ?>">
             <label for="inputDescription">Description</label>
             <textarea class="form-control" name="description" id="inputDescription" rows="5"><?=$distro['description']?></textarea>
         </div>
-        <?=generarAlert($errors, 'description')?>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <?php if( isset($errors['description']) ): ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong><?=$errors['description']['required']?></strong>
+            </div>
+        <?php endif; ?>
+        <input type="hidden" name="id" value="<?=$id?>">
+        <button type="submit" class="btn btn-default">Actualizar</button>
     </form>
 </div><!-- /.container -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

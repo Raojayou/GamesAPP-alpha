@@ -51,12 +51,12 @@
         <tbody>
             <?php while( $row = $queryResult->fetch(PDO::FETCH_ASSOC) ): ?>
         <tr>
-            <td><img src="<?=$row['image']?>" alt="Logo de <?=$row['name']?>"></td>
-            <td><?=$row['name']?></td>
-            <td><?=$row['based']?></td>
+            <td><a href="distro.php?id=<?=$row['id']?>"><img src="<?=$row['image']?>" alt="Logo de <?=$row['name']?>"></a></td>
+            <td><a href="distro.php?id=<?=$row['id']?>"><?=$row['name']?></a></td>
+            <td><?=$row['basedon']?></td>
             <td><?=$row['version']?></td>
-            <td><?=$row['main_page']?></td>
-            <td><a href="edit.php?id=<?=$row['id']?>" class="editar">
+            <td><?=$row['web']?></td>
+            <td><a href="update.php?id=<?=$row['id']?>" class="editar">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
             </td>
