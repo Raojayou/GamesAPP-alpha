@@ -1,7 +1,7 @@
 <?php
-    include_once 'config.php';
-    include_once 'connectdb.php';
-    include_once 'helpers.php';
+include_once 'config.php';
+include_once 'connectdb.php';
+include_once 'helpers.php';
 
     $queryResult = $pdo->query("SELECT * from distro ORDER BY id DESC");
 ?>
@@ -28,7 +28,8 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="index.php">Inicio</a></li>
-                <li><a href="add.php">Añadir Distro</a></li>
+                <li><a href="?route=add">Añadir Distro</a></li>
+                <li><a href="#">Contacto</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -56,11 +57,11 @@
             <td><?=$row['basedon']?></td>
             <td><?=$row['version']?></td>
             <td><?=$row['web']?></td>
-            <td><a href="update.php?id=<?=$row['id']?>" class="editar">
+            <td><a href="?route=update&id=<?=$row['id']?>" class="editar">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
             </td>
-            <td><a href="delete.php?id=<?=$row['id']?>" class="borrar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+            <td><a href="?route=delete&id=<?=$row['id']?>" class="borrar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
         </tr>
         <?php endwhile; ?>
 

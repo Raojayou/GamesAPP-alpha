@@ -95,7 +95,7 @@ if( !empty($_POST)){
         ]);
 
         // Si se guarda sin problemas se redirecciona la aplicación a la página de inicio
-        header('Location: index.php');
+        header('Location: .');
     }else{
         // Si tengo errores de validación
         $error = true;
@@ -129,11 +129,11 @@ $error = !empty($errors)?true:false;
             <ul class="nav navbar-nav">
                 <li class="active"><a href="index.php">Inicio</a></li>
                 <li><a href="add.php">Añadir Distro</a></li>
+                <li><a href="#">Contacto</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
-
 <div class="container">
     <h1>Add New Distro</h1>
     <form action="" method="post">

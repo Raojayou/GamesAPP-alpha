@@ -110,7 +110,7 @@ if( !empty($_POST)){
         ]);
 
         // Si se guarda sin problemas se redirecciona la aplicación a la página de inicio
-        header('Location: index.php');
+        header('Location: .');
     }else{
         // Si tengo errores de validación
         $error = true;
