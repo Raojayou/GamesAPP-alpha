@@ -31,7 +31,6 @@
 <div class="container">
     <div class="jumbotron">
         <h1>Página no encontrada</h1>
-        <p>Error 404</p>
     </div>
 </div><!-- /.container -->
 </body>
