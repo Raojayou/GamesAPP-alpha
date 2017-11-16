@@ -20,7 +20,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.php">Inicio</a></li>
+                <li class="active"><a href="views/home.php">Inicio</a></li>
                 <li><a href="?route=add">Añadir Distro</a></li>
                 <li><a href="#">Contacto</a></li>
             </ul>

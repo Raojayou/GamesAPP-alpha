@@ -1,123 +1,4 @@
 <?php
-include_once 'config.php';
-include_once 'connectdb.php';
-include_once 'helpers.php';
-include_once 'arrays.php';
-include_once 'dbhelpers.php';
-
-$id = $_REQUEST['id'];
-
-// Recuperar datos
-$distro = getDistro($id, $pdo);
-
-if( !$distro ){
-    header('Location: index.php');
-}
-
-$distro['basedon'] = convierteArray($distro['basedon']);
-$distro['arch'] = convierteArray($distro['arch']);
-$distro['desktop'] = convierteArray($distro['desktop']);
-$distro['category'] = convierteArray($distro['category']);
-
-$errors = array();  // Array donde se guardaran los errores de validación
-$error = false;     // Será true si hay errores de validación.
-
-// Se construye un array asociativo $distro con todas sus claves vacías
-
-
-if( !empty($_POST)){
-    // Extraemos los datos enviados por POST
-    $distro['name'] = htmlspecialchars(trim($_POST['distroName']));
-    $distro['image'] = htmlspecialchars(trim($_POST['image']));
-    $distro['ostype'] = $_POST['ostype'] ?? array();    // Si no se recibe nada se carga un array vacío
-    $distro['basedon'] = $_POST['basedon'] ?? array();
-    $distro['origin'] = htmlspecialchars(trim($_POST['origin']));
-    $distro['arch'] = $_POST['architecture'] ?? array();
-    $distro['desktop'] = $_POST['desktop'] ?? array();
-    $distro['category'] = $_POST['category'] ?? array();
-    $distro['status'] = htmlspecialchars(trim($_POST['status']));
-    $distro['version'] = htmlspecialchars(trim($_POST['version']));
-    $distro['web'] = htmlspecialchars(trim($_POST['web']));
-    $distro['forums'] = htmlspecialchars(trim($_POST['forum']));
-    $distro['doc'] = htmlspecialchars(trim($_POST['doc']));
-    $distro['error_tracker'] = htmlspecialchars(trim($_POST['errorTracker']));
-    $distro['description'] = htmlspecialchars(trim($_POST['description']));
-
-    // Comprobar que se han enviado los campos requeridos
-    // Name, OsType, Origin, BasedOn, Architectura, Desktop, Category, Status, Web, Description
-    if( $distro['name'] == "" ){
-        $errors['name']['required'] = "El campo nombre es requerido";
-    }
-
-    if( $distro['ostype'] == "" ){
-        $errors['ostype']['required'] = "El campo Os Type es requerido";
-    }
-
-    if( empty($distro['basedon']) ){
-        $errors['basedon']['required'] = "El campo based on debe tener al menos una opción seleccionada";
-    }
-    if( empty($distro['origin']) ){
-        $errors['origin']['required'] = "El campo origin debe tener al menos una opción seleccionada";
-    }
-
-    if( empty($distro['arch']) ){
-        $errors['architecture']['required'] = "El campo architecture debe tener al menos una opción seleccionada";
-    }
-
-    if( empty($distro['desktop']) ){
-        $errors['desktop']['required'] = "El campo desktop debe tener al menos una opción seleccionada";
-    }
-
-    if( empty($distro['category']) ){
-        $errors['category']['required'] = "El campo Category es requerido";
-    }
-
-    if( $distro['status'] == "" ){
-        $errors['status']['required'] = "El campo Status es requerido";
-    }
-    if( $distro['web'] == "" ){
-        $errors['web']['required'] = "El campo web es requerido";
-    }
-
-    if( $distro['description'] == "" ){
-        $errors['description']['required'] = "El campo Description es requerido";
-    }
-
-    if ( empty($errors) ){
-        // Si no tengo errores de validación
-        // Guardo en la BD
-        $sql = "UPDATE distro SET image = :image, name = :name, ostype = :ostype, basedon = :basedon, origin = :origin, arch = :arch, desktop = :desktop, category = :category, status = :status, version = :version, web = :web, doc = :doc, forums = :forums, error_tracker = :error_tracker, description = :description, updated_at = NOW() WHERE id = :id LIMIT 1";
-
-        $result = $pdo->prepare($sql);
-
-        $result->execute([
-            'id'            => $id,
-            'image'         => $distro['image'],
-            'name'          => $distro['name'],
-            'ostype'        => $distro['ostype'],
-            'basedon'       => convierteCadena( $distro['basedon']),
-            'origin'        => $distro['origin'],
-            'arch'          => convierteCadena( $distro['arch']),
-            'desktop'       => convierteCadena( $distro['desktop']),
-            'category'      => convierteCadena( $distro['category']),
-            'status'        => $distro['status'],
-            'version'       => $distro['version'],
-            'web'           => $distro['web'],
-            'doc'           => $distro['doc'],
-            'forums'        => $distro['forums'],
-            'error_tracker' => $distro['error_tracker'],
-            'description'   => $distro['description']
-        ]);
-
-        // Si se guarda sin problemas se redirecciona la aplicación a la página de inicio
-        header('Location: .');
-    }else{
-        // Si tengo errores de validación
-        $error = true;
-    }
-}
-
-$error = !empty($errors)?true:false;
 
 ?>
 <html lang="es">
@@ -126,7 +7,7 @@ $error = !empty($errors)?true:false;
     <title>Starter Template for Bootstrap</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="../public/css/app.css">
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -138,12 +19,11 @@ $error = !empty($errors)?true:false;
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">DistroADA</a>
+            <a class="navbar-brand" href="<?=BASE_URL?>">DistroADA</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.php">Inicio</a></li>
-                <li><a href="add.php">Añadir Distro</a></li>
+                <li><a href="add">Añadir Distro</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -252,7 +132,7 @@ $error = !empty($errors)?true:false;
                 <strong><?=$errors['description']['required']?></strong>
             </div>
         <?php endif; ?>
-        <input type="hidden" name="id" value="<?=$id?>">
+        <input type="hidden" name="id" value="<?=$distro['id']?>">
         <button type="submit" class="btn btn-default">Actualizar</button>
     </form>
 </div><!-- /.container -->

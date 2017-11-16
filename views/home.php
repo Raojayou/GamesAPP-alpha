@@ -1,10 +1,3 @@
-<?php
-include_once 'config.php';
-include_once 'connectdb.php';
-include_once 'helpers.php';
-
-    $queryResult = $pdo->query("SELECT * from distro ORDER BY id DESC");
-?>
 <html lang="es">
 <head>
     <meta charset="utf-8">
@@ -23,13 +16,11 @@ include_once 'helpers.php';
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">DistroADA</a>
+            <a class="navbar-brand" href="<?=BASE_URL?>">DistroADA</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.php">Inicio</a></li>
-                <li><a href="?route=add">Añadir Distro</a></li>
-                <li><a href="#">Contacto</a></li>
+                <li><a href="add">Añadir Distro</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -50,20 +41,20 @@ include_once 'helpers.php';
         </tr>
         </thead>
         <tbody>
-            <?php while( $row = $queryResult->fetch(PDO::FETCH_ASSOC) ): ?>
+        <?php foreach ($distros as $distro): ?>
         <tr>
-            <td><a href="distro.php?id=<?=$row['id']?>"><img src="<?=$row['image']?>" alt="Logo de <?=$row['name']?>"></a></td>
-            <td><a href="distro.php?id=<?=$row['id']?>"><?=$row['name']?></a></td>
-            <td><?=$row['basedon']?></td>
-            <td><?=$row['version']?></td>
-            <td><?=$row['web']?></td>
-            <td><a href="?route=update&id=<?=$row['id']?>" class="editar">
+            <td><a href="?route=distro&id=<?=$distro['id']?>"><img src="<?=$distro['image']?>" alt="Logo de <?=$distro['name']?>"></a></td>
+            <td><a href="?route=    distro&id=<?=$distro['id']?>"><?=$distro['name']?></a></td>
+            <td><?=$distro['basedon']?></td>
+            <td><?=$distro['version']?></td>
+            <td><?=$distro['web']?></td>
+            <td><a href="?route=update&id=<?=$distro['id']?>" class="editar">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
             </td>
-            <td><a href="?route=delete&id=<?=$row['id']?>" class="borrar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+            <td><a href="?route=delete&id=<?=$distro['id']?>" class="borrar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
         </tr>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
 
         </tbody>
     </table>
