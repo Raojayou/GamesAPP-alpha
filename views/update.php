@@ -7,7 +7,7 @@
     <title>Starter Template for Bootstrap</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../public/css/app.css">
+    <link rel="stylesheet" href="<?=BASE_URL?>/css/app.css">
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -31,7 +31,7 @@
 
 <div class="container">
     <h1>Add New Distro</h1>
-    <form action="" method="post">
+    <form action="" method="POST">
         <div class="form-group<?php echo (isset($errors['nameDistro']['required'])?" has-error":""); ?>">
             <label for="inputName">Name</label>
             <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name" value="<?=$distro['name']?>">
@@ -133,6 +133,7 @@
             </div>
         <?php endif; ?>
         <input type="hidden" name="id" value="<?=$distro['id']?>">
+        <input type="hidden" name="_method" value="PUT">
         <button type="submit" class="btn btn-default">Actualizar</button>
     </form>
 </div><!-- /.container -->

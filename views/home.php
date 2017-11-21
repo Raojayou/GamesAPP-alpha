@@ -43,8 +43,8 @@
         <tbody>
         <?php foreach ($distros as $distro): ?>
         <tr>
-            <td><a href="?route=distro&id=<?=$distro['id']?>"><img src="<?=$distro['image']?>" alt="Logo de <?=$distro['name']?>"></a></td>
-            <td><a href="?route=    distro&id=<?=$distro['id']?>"><?=$distro['name']?></a></td>
+            <td><a href="distro/<?=$distro['id']?>"><img src="<?=$distro['image']?>" alt="Logo de <?=$distro['name']?>"></a></td>
+            <td><a href="distro/<?=$distro['id']?>"><?=$distro['name']?></a></td>
             <td><?=$distro['basedon']?></td>
             <td><?=$distro['version']?></td>
             <td><?=$distro['web']?></td>
@@ -52,7 +52,13 @@
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
             </td>
-            <td><a href="?route=delete&id=<?=$distro['id']?>" class="borrar"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+            <td>
+                <form method="POST">
+                    <input type="hidden" name="id" value="<?=$distro['id']?>">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-link btn-alert"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                </form>
+            </td>
         </tr>
         <?php endforeach; ?>
 
