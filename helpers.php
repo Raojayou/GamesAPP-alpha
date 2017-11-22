@@ -31,10 +31,9 @@
 
 
         if( !is_array($seleccionados) ){
-            $seleccionados = (array) $seleccionados;
+            $seleccionados = explode(", ", $seleccionados);g
         }
 
-        print_r($seleccionados);
         foreach ($listaValores as $valor){
             $selected = "";
             if( in_array($valor, $seleccionados) ) $selected = " selected";
