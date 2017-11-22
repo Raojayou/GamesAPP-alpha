@@ -3,6 +3,11 @@ namespace App\Controllers;
 
 class HomeController {
 
+    /**
+     * Ruta raíz [GET] / para la dirección home de la aplicación. En este caso se muestra la lista de distribuciones.
+     *
+     * @return string Render de la web con toda la información.
+     */
     public function getIndex(){
         global $pdo;
 
@@ -17,6 +22,11 @@ class HomeController {
         return render('../views/home.php', ['distros' => $distros]);
     }
 
+    /**
+     * Ruta [GET] /add que muestra el formulario de añadir una nueva distribución.
+     *
+     * @return string Render de la web con toda la información.
+     */
     public function getAdd(){
         global $osTypeValues, $basedOnValues, $desktopValues, $originValues, $archValues, $categoryValues, $statusValues;
 
@@ -39,6 +49,11 @@ class HomeController {
         ]);
     }
 
+    /**
+     * Ruta [POST] /add que procesa la introducción de una nueva distribución.
+     *
+     * @return string Render de la web con toda la información.
+     */
     public function postAdd()
     {
         global $pdo, $osTypeValues, $basedOnValues, $desktopValues, $originValues, $archValues, $categoryValues, $statusValues;
@@ -145,10 +160,15 @@ class HomeController {
         ]);
     }
 
-    public function getUpdate(){
+    /**
+     * Ruta [GET] /update que muestra el formulario de actualización de una nueva distribución.
+     *
+     * @param id Código de la distribución.
+     *
+     * @return string Render de la web con toda la información.
+     */
+    public function getUpdate($id){
         global $pdo, $osTypeValues, $basedOnValues, $desktopValues, $originValues, $archValues, $categoryValues, $statusValues;
-
-        $id = $_REQUEST['id'];
 
         // Recuperar datos
         $distro = getDistro($id, $pdo);
@@ -169,10 +189,16 @@ class HomeController {
         ]);
     }
 
-    public function putUpdate(){
+    /**
+     * Ruta [PUT] /update que actualiza toda la información de una distribución. Se usa el verbo
+     * put porque la actualización se realiza en todos los campos de la base de datos.
+     *
+     * @param id Código de la distribución.
+     *
+     * @return string Render de la web con toda la información.
+     */
+    public function putUpdate($id){
         global $pdo, $osTypeValues, $basedOnValues, $desktopValues, $originValues, $archValues, $categoryValues, $statusValues;
-
-        $id = $_REQUEST['id'];
 
         $errors = array();  // Array donde se guardaran los errores de validación
 
@@ -284,6 +310,9 @@ class HomeController {
         ]);
     }
 
+    /**
+     * Ruta [DELETE] / para eliminar la distribución con el código pasado
+     */
     public function deleteIndex(){
         global $pdo;
 
@@ -297,4 +326,29 @@ class HomeController {
 
         header("Location: ". BASE_URL);
     }
+
+    /**
+     * Ruta [GET] /distro/{id} que muestra la página de detalle de la distribución.
+     * todo: La vista de detalle está pendiente de implementar.
+     *
+     * @param id Código de la distribución.
+     *
+     * @return string Render de la web con toda la información.
+     */
+    public function getDistro($id){
+
+        global $pdo;
+
+        $distroId = $id;
+
+        // Recuperar datos
+        $distro = getDistro($distroId, $pdo);
+
+        if( !$distro ){
+            header('Location: '.BASE_URL);
+        }
+
+        dameDato($distro);
+    }
+
 }

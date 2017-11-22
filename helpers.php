@@ -28,10 +28,13 @@
     function generarSelect($listaValores, $seleccionados, $name, $multiple = false){
         $salida = '<select class="form-control" name="'.$name.($multiple?"[]":""). '"' . ($multiple?"multiple":"") .'>';
 
+
+
         if( !is_array($seleccionados) ){
             $seleccionados = (array) $seleccionados;
         }
 
+        print_r($seleccionados);
         foreach ($listaValores as $valor){
             $selected = "";
             if( in_array($valor, $seleccionados) ) $selected = " selected";
@@ -60,6 +63,8 @@
             }
 
             // Y se inserta dicha lista en un bloque alert (ver documentación bootstrap 3.3.7)
+            // El alert se carga con sintaxis nowdoc. Para más info:
+            // http://php.net/manual/es/language.types.string.php#language.types.string.syntax.nowdoc
             $alert = <<<ALERT
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

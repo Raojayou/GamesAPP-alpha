@@ -48,7 +48,8 @@
             <td><?=$distro['basedon']?></td>
             <td><?=$distro['version']?></td>
             <td><?=$distro['web']?></td>
-            <td><a href="?route=update&id=<?=$distro['id']?>" class="editar">
+            <td>
+                <a href="update/<?=$distro['id']?>" class="editar btn btn-link">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
             </td>
