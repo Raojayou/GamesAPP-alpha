@@ -35,6 +35,7 @@ function render($fileName, $params = []){
 $router = new RouteCollector();
 
 $router->controller('/', App\Controllers\HomeController::class);
+$router->controller('/distros', App\Controllers\DistrosController::class);
 
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 

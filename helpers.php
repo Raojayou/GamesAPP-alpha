@@ -28,10 +28,8 @@
     function generarSelect($listaValores, $seleccionados, $name, $multiple = false){
         $salida = '<select class="form-control" name="'.$name.($multiple?"[]":""). '"' . ($multiple?"multiple":"") .'>';
 
-
-
         if( !is_array($seleccionados) ){
-            $seleccionados = explode(", ", $seleccionados);g
+            $seleccionados = explode(", ", $seleccionados);
         }
 
         foreach ($listaValores as $valor){

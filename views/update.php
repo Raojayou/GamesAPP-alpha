@@ -31,7 +31,7 @@
 
 <div class="container">
     <h1>Add New Distro</h1>
-    <form action="" method="POST">
+    <form method="POST">
         <div class="form-group<?php echo (isset($errors['nameDistro']['required'])?" has-error":""); ?>">
             <label for="inputName">Name</label>
             <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name" value="<?=$distro['name']?>">

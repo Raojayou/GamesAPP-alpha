@@ -20,7 +20,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="add">Añadir Distro</a></li>
+                <li><a href="/distros/new">Añadir Distro</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -43,18 +43,18 @@
         <tbody>
         <?php foreach ($distros as $distro): ?>
         <tr>
-            <td><a href="distro/<?=$distro['id']?>"><img src="<?=$distro['image']?>" alt="Logo de <?=$distro['name']?>"></a></td>
-            <td><a href="distro/<?=$distro['id']?>"><?=$distro['name']?></a></td>
+            <td><a href="distros/<?=$distro['id']?>"><img src="<?=$distro['image']?>" alt="Logo de <?=$distro['name']?>"></a></td>
+            <td><a href="distros/<?=$distro['id']?>"><?=$distro['name']?></a></td>
             <td><?=$distro['basedon']?></td>
             <td><?=$distro['version']?></td>
             <td><?=$distro['web']?></td>
             <td>
-                <a href="update/<?=$distro['id']?>" class="editar btn btn-link">
+                <a href="/distros/edit/<?=$distro['id']?>" class="editar btn btn-link">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
             </td>
             <td>
-                <form method="POST">
+                <form action="/distros" method="POST">
                     <input type="hidden" name="id" value="<?=$distro['id']?>">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="btn btn-link btn-alert"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
