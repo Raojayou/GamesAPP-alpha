@@ -16,11 +16,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?=BASE_URL?>">DistroADA</a>
+            <a class="navbar-brand" href="{{ '' | url }}">DistroADA</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/distros/new">Añadir Distro</a></li>
+                <li><a href="{{ 'distros/new' | url }}">Añadir Distro</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -41,27 +41,27 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($distros as $distro): ?>
+        {% for distro in distros %}
         <tr>
-            <td><a href="distros/<?=$distro['id']?>"><img src="<?=$distro['image']?>" alt="Logo de <?=$distro['name']?>"></a></td>
-            <td><a href="distros/<?=$distro['id']?>"><?=$distro['name']?></a></td>
-            <td><?=$distro['basedon']?></td>
-            <td><?=$distro['version']?></td>
-            <td><?=$distro['web']?></td>
+            <td><a href="distros/{{ distro.id }}"><img src="{{ distro.image }}" alt="Logo de {{ distro.name }}"></a></td>
+            <td><a href="distros/{{ distro.id }}">{{ distro.name }}</a></td>
+            <td>{{ distro.basedon }}</td>
+            <td>{{ distro.version }}</td>
+            <td>{{ distro.web }}</td>
             <td>
-                <a href="/distros/edit/<?=$distro['id']?>" class="editar btn btn-link">
+                <a href="/distros/edit/{{ distro.id }}" class="editar btn btn-link">
                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 </a>
             </td>
             <td>
                 <form action="/distros" method="POST">
-                    <input type="hidden" name="id" value="<?=$distro['id']?>">
+                    <input type="hidden" name="id" value="{{ distro.id }}">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" class="btn btn-link btn-alert"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                 </form>
             </td>
         </tr>
-        <?php endforeach; ?>
+        {% endfor %}
 
         </tbody>
     </table>

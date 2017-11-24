@@ -14,10 +14,16 @@ class DistrosController extends BaseController {
         $errors = array();  // Array donde se guardaran los errores de validación
         $error = false;     // Será true si hay errores de validación.
 
+        $webInfo = [
+            'h1'        => 'Añadir Distro',
+            'submit'    => 'Añadir',
+            'method'    => 'POST'
+        ];
+
         // Se construye un array asociativo $distro con todas sus claves vacías
         $distro = array_fill_keys(["name","image", "ostype", "basedon", "origin", "arch", "desktop", "category", "status", "version", "web", "forums", "doc", "errorTracker", "description"], "");
 
-        return render('../views/add.php', [
+        return $this->render('formDistros.twig', [
             'osTypeValues'  => $osTypeValues,
             'basedOnValues' => $basedOnValues,
             'desktopValues' => $desktopValues,
@@ -27,6 +33,7 @@ class DistrosController extends BaseController {
             'statusValues'  => $statusValues,
             'distro'        => $distro,
             'errors'        => $errors,
+            'webInfo'       => $webInfo
         ]);
     }
 
@@ -37,6 +44,12 @@ class DistrosController extends BaseController {
      */
     public function postNew(){
         global $osTypeValues, $basedOnValues, $desktopValues, $originValues, $archValues, $categoryValues, $statusValues;
+
+        $webInfo = [
+            'h1'        => 'Añadir Distro',
+            'submit'    => 'Añadir',
+            'method'    => 'POST'
+        ];
 
         if (!empty($_POST)) {
             // Extraemos los datos enviados por POST
@@ -127,16 +140,17 @@ class DistrosController extends BaseController {
             }
         }
 
-        return render('../views/add.php', [
-            'osTypeValues' => $osTypeValues,
+        return $this->render('formDistros.twig', [
+            'osTypeValues'  => $osTypeValues,
             'basedOnValues' => $basedOnValues,
             'desktopValues' => $desktopValues,
-            'originValues' => $originValues,
-            'archValues' => $archValues,
-            'categoryValues' => $categoryValues,
-            'statusValues' => $statusValues,
+            'originValues'  => $originValues,
+            'archValues'    => $archValues,
+            'categoryValues'=> $categoryValues,
+            'statusValues'  => $statusValues,
             'distro'        => $distro,
-            'errors' => $errors
+            'errors'        => $errors,
+            'webInfo'       => $webInfo
         ]);
     }
 
@@ -150,14 +164,22 @@ class DistrosController extends BaseController {
     public function getEdit($id){
         global $osTypeValues, $basedOnValues, $desktopValues, $originValues, $archValues, $categoryValues, $statusValues;
 
+        $errors = array();  // Array donde se guardaran los errores de validación
+
+        $webInfo = [
+            'h1'        => 'Actualizar Distro',
+            'submit'    => 'Actualizar',
+            'method'    => 'PUT'
+        ];
+
         // Recuperar datos
         $distro = getDistro($id, $this->pdo);
 
         if( !$distro ){
-            header('Location: home.php');
+            header('Location: home.twig');
         }
 
-        return render('../views/update.php',[
+        return $this->render('formDistros.twig',[
             'osTypeValues'  => $osTypeValues,
             'basedOnValues' => $basedOnValues,
             'desktopValues' => $desktopValues,
@@ -165,7 +187,9 @@ class DistrosController extends BaseController {
             'archValues'    => $archValues,
             'categoryValues'=> $categoryValues,
             'statusValues'  => $statusValues,
-            'distro'        => $distro
+            'distro'        => $distro,
+            'errors'        => $errors,
+            'webInfo'       => $webInfo
         ]);
     }
 
@@ -181,6 +205,12 @@ class DistrosController extends BaseController {
         global $osTypeValues, $basedOnValues, $desktopValues, $originValues, $archValues, $categoryValues, $statusValues;
 
         $errors = array();  // Array donde se guardaran los errores de validación
+
+        $webInfo = [
+            'h1'        => 'Actualizar Distro',
+            'submit'    => 'Actualizar',
+            'method'    => 'PUT'
+        ];
 
         if( !empty($_POST)){
             // Extraemos los datos enviados por POST
@@ -277,7 +307,7 @@ class DistrosController extends BaseController {
 
         $error = !empty($errors);
 
-        return render('../views/update.php', [
+        return $this->render('formDistros.twig', [
             'osTypeValues'  => $osTypeValues,
             'basedOnValues' => $basedOnValues,
             'desktopValues' => $desktopValues,
@@ -286,7 +316,8 @@ class DistrosController extends BaseController {
             'categoryValues'=> $categoryValues,
             'statusValues'  => $statusValues,
             'distro'        => $distro,
-            'errors'        => $errors
+            'errors'        => $errors,
+            'webInfo'       => $webInfo
         ]);
     }
 
@@ -312,7 +343,7 @@ class DistrosController extends BaseController {
             // distribuciones haya en la base de datos
             $distros = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-            return render('../views/home.php', ['distros' => $distros]);
+            return $this->render('home.twig', ['distros' => $distros]);
         }else{
             // Recuperar datos
             $distro = getDistro($id, $this->pdo);
