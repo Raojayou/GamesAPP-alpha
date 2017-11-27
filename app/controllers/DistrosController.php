@@ -121,11 +121,11 @@ class DistrosController extends BaseController {
                     'image' => $distro['image'],
                     'name' => $distro['name'],
                     'ostype' => $distro['ostype'],
-                    'basedon' => convierteCadena($distro['basedon']),
+                    'basedon' => implode(", ", $distro['basedon']),
                     'origin' => $distro['origin'],
-                    'arch' => convierteCadena($distro['arch']),
-                    'desktop' => convierteCadena($distro['desktop']),
-                    'category' => convierteCadena($distro['category']),
+                    'arch' => implode(", ", $distro['arch']),
+                    'desktop' => implode(", ", $distro['desktop']),
+                    'category' => implode(", ", $distro['category']),
                     'status' => $distro['status'],
                     'version' => $distro['version'],
                     'web' => $distro['web'],
@@ -283,11 +283,11 @@ class DistrosController extends BaseController {
                     'image'         => $distro['image'],
                     'name'          => $distro['name'],
                     'ostype'        => $distro['ostype'],
-                    'basedon'       => convierteCadena( $distro['basedon']),
+                    'basedon'       => implode(", ", $distro['basedon']),
                     'origin'        => $distro['origin'],
-                    'arch'          => convierteCadena( $distro['arch']),
-                    'desktop'       => convierteCadena( $distro['desktop']),
-                    'category'      => convierteCadena( $distro['category']),
+                    'arch'          => implode(", ", $distro['arch']),
+                    'desktop'       => implode(", ", $distro['desktop']),
+                    'category'      => implode(", ", $distro['category']),
                     'status'        => $distro['status'],
                     'version'       => $distro['version'],
                     'web'           => $distro['web'],
@@ -339,20 +339,35 @@ class DistrosController extends BaseController {
 
             $query->execute();
 
+            $webInfo = [
+                'title' => 'Página de Inicio - DistroADA'
+            ];
+
             // $distros es un array compuesto por tantos arrays asociativos como
             // distribuciones haya en la base de datos
             $distros = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-            return $this->render('home.twig', ['distros' => $distros]);
+            return $this->render('home.twig', [
+                'distros' => $distros,
+                'webInfo' => $webInfo
+            ]);
+
         }else{
             // Recuperar datos
             $distro = getDistro($id, $this->pdo);
 
+            $webInfo = [
+                'title' => 'Página de Distro - DistroADA'
+            ];
+
             if( !$distro ){
-                header('Location: '.BASE_URL);
+                return $this->render('404.twig', ['webInfo' => $webInfo]);
             }
 
-            dameDato($distro);
+            //dameDato($distro);
+            return $this->render('distro.twig', [
+                'distro' => $distro,
+                'webInfo'=> $webInfo]);
         }
 
     }

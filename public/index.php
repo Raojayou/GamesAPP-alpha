@@ -20,18 +20,6 @@ define('BASE_URL', $baseUrl);
 
 $route = $_GET['route'] ?? "/";
 
-function render($fileName, $params = []){
-    // Activa el buffer interno de PHP para que toda la salida que va al navegador
-    // se guarde en dicho buffer interno.
-    ob_start(); // Omite cualquier salida de la aplicación y la almacena internamente
-
-    extract($params); // Extrae los datos del array asociativo $params y los convierte en variables
-
-    require($fileName);
-
-    return ob_get_clean(); // Se trae los datos del buffer interno y lo limpia
-}
-
 $router = new RouteCollector();
 
 $router->controller('/', App\Controllers\HomeController::class);
