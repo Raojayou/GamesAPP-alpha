@@ -1,6 +1,8 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Distro;
+
 class DistrosController extends BaseController {
 
     /**
@@ -113,11 +115,11 @@ class DistrosController extends BaseController {
                 //dameDato($distro);
                 // Si no tengo errores de validación
                 // Guardo en la BD
-                $sql = "INSERT INTO distro (image, name, ostype, basedon, origin, arch, desktop, category, status, version, web, doc, forums, error_tracker, description, created_at) VALUES (:image, :name, :ostype, :basedon, :origin, :arch, :desktop, :category, :status, :version, :web, :doc, :forums, :error_tracker, :description, NOW())";
+//                $sql = "INSERT INTO distro (image, name, ostype, basedon, origin, arch, desktop, category, status, version, web, doc, forums, error_tracker, description, created_at) VALUES (:image, :name, :ostype, :basedon, :origin, :arch, :desktop, :category, :status, :version, :web, :doc, :forums, :error_tracker, :description, NOW())";
+//
+//                $result = $this->pdo->prepare($sql);
 
-                $result = $this->pdo->prepare($sql);
-
-                $result->execute([
+                $distro = new Distro([
                     'image' => $distro['image'],
                     'name' => $distro['name'],
                     'ostype' => $distro['ostype'],
@@ -134,6 +136,7 @@ class DistrosController extends BaseController {
                     'error_tracker' => $distro['errorTracker'],
                     'description' => $distro['description']
                 ]);
+                $distro->save();
 
                 // Si se guarda sin problemas se redirecciona la aplicación a la página de inicio
                 header('Location: ' . BASE_URL);
@@ -274,11 +277,11 @@ class DistrosController extends BaseController {
             if ( empty($errors) ){
                 // Si no tengo errores de validación
                 // Guardo en la BD
-                $sql = "UPDATE distro SET image = :image, name = :name, ostype = :ostype, basedon = :basedon, origin = :origin, arch = :arch, desktop = :desktop, category = :category, status = :status, version = :version, web = :web, doc = :doc, forums = :forums, error_tracker = :error_tracker, description = :description, updated_at = NOW() WHERE id = :id LIMIT 1";
+//                $sql = "UPDATE distro SET image = :image, name = :name, ostype = :ostype, basedon = :basedon, origin = :origin, arch = :arch, desktop = :desktop, category = :category, status = :status, version = :version, web = :web, doc = :doc, forums = :forums, error_tracker = :error_tracker, description = :description, updated_at = NOW() WHERE id = :id LIMIT 1";
+//
+//                $result = $this->pdo->prepare($sql);
 
-                $result = $this->pdo->prepare($sql);
-
-                $result->execute([
+                $distro = Distro::where('id', $id)->update([
                     'id'            => $distro['id'],
                     'image'         => $distro['image'],
                     'name'          => $distro['name'],
@@ -335,17 +338,12 @@ class DistrosController extends BaseController {
      */
     public function getIndex($id = null){
         if( is_null($id) ){
-            $query = $this->pdo->query("SELECT * from distro ORDER BY id DESC");
-
-            $query->execute();
-
             $webInfo = [
                 'title' => 'Página de Inicio - DistroADA'
             ];
 
-            // $distros es un array compuesto por tantos arrays asociativos como
-            // distribuciones haya en la base de datos
-            $distros = $query->fetchAll(\PDO::FETCH_ASSOC);
+            $distros = Distro::query()->orderBy('id','desc')->get();
+            //$distros = Distro::all();
 
             return $this->render('home.twig', [
                 'distros' => $distros,
@@ -354,12 +352,12 @@ class DistrosController extends BaseController {
 
         }else{
             // Recuperar datos
-            $distro = getDistro($id, $this->pdo);
 
             $webInfo = [
                 'title' => 'Página de Distro - DistroADA'
             ];
 
+            $distro = Distro::find($id);
             if( !$distro ){
                 return $this->render('404.twig', ['webInfo' => $webInfo]);
             }
@@ -378,11 +376,7 @@ class DistrosController extends BaseController {
     public function deleteIndex(){
         $id = $_REQUEST['id'];
 
-        $sql = "DELETE FROM distro WHERE id = :id";
-
-        $result = $this->pdo->prepare($sql);
-
-        $result->execute(['id' => $id]);
+        $distro = Distro::destroy($id);
 
         header("Location: ". BASE_URL);
     }

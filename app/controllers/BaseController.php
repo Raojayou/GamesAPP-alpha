@@ -3,14 +3,10 @@ namespace App\Controllers;
 
 class BaseController {
 
-    public $pdo;
     public $templateEngine;
 
     public function __construct()
     {
-        global $pdo;
-        $this->pdo = $pdo;
-
         // Inicializar motor de template
         $loader = new \Twig_Loader_Filesystem('../views');
         $this->templateEngine = new \Twig_Environment($loader, [

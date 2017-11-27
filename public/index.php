@@ -2,13 +2,11 @@
 require_once '../vendor/autoload.php';
 
 use Phroute\Phroute\RouteCollector;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 // Punto de entrada a la aplicación
-require_once '../config.php';
-require_once '../connectdb.php';
 require_once '../arrays.php';
 require_once '../helpers.php';
-require_once '../dbhelpers.php';
 
 $baseDir = str_replace(
     basename($_SERVER['SCRIPT_NAME']),
@@ -17,6 +15,21 @@ $baseDir = str_replace(
 
 $baseUrl = "http://" . $_SERVER['HTTP_HOST'] . $baseDir;
 define('BASE_URL', $baseUrl);
+
+// Instancia de Eloquent
+$capsule = new Capsule;
+$capsule->addConnection([
+    'driver'    => 'mysql',
+    'host'      => 'localhost',
+    'database'  => 'distroadadb',
+    'username'  => 'manolo',
+    'password'  => 'manolo',
+    'charset'   => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix'    => '',
+]);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
 
 $route = $_GET['route'] ?? "/";
 
