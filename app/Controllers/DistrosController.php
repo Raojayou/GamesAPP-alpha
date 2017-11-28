@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\Distro;
+use Sirius\Validation\Validator;
 
 class DistrosController extends BaseController {
 
@@ -54,13 +55,28 @@ class DistrosController extends BaseController {
         ];
 
         if (!empty($_POST)) {
+            $validator = new Validator();
+
+            $requiredFieldMessageError = "El {label} es requerido";
+
+            $validator->add('name:Nombre', 'required',[],$requiredFieldMessageError);
+            $validator->add('ostype:Os Type', 'required', [], $requiredFieldMessageError);
+            $validator->add('basedon:Based On', 'required',[], $requiredFieldMessageError);
+            $validator->add('origin:Origen','required',[],$requiredFieldMessageError);
+            $validator->add('architecture:Arquitectura','required',[],$requiredFieldMessageError);
+            $validator->add('desktop:Desktop','required',[],$requiredFieldMessageError);
+            $validator->add('category:Categoría','required',[],$requiredFieldMessageError);
+            $validator->add('status:Estado','required',[],$requiredFieldMessageError);
+            $validator->add('web:Sitio Web', 'required',[], $requiredFieldMessageError);
+            $validator->add('description:Descripción','required',[],$requiredFieldMessageError);
+
             // Extraemos los datos enviados por POST
-            $distro['name'] = htmlspecialchars(trim($_POST['distroName']));
+            $distro['name'] = htmlspecialchars(trim($_POST['name']));
             $distro['image'] = htmlspecialchars(trim($_POST['image']));
             $distro['ostype'] = $_POST['ostype'] ?? array();    // Si no se recibe nada se carga un array vacío
             $distro['basedon'] = $_POST['basedon'] ?? array();
             $distro['origin'] = htmlspecialchars(trim($_POST['origin']));
-            $distro['arch'] = $_POST['architecture'] ?? array();
+            $distro['architecture'] = $_POST['architecture'] ?? array();
             $distro['desktop'] = $_POST['desktop'] ?? array();
             $distro['category'] = $_POST['category'] ?? array();
             $distro['status'] = htmlspecialchars(trim($_POST['status']));
@@ -71,61 +87,14 @@ class DistrosController extends BaseController {
             $distro['errorTracker'] = htmlspecialchars(trim($_POST['errorTracker']));
             $distro['description'] = htmlspecialchars(trim($_POST['description']));
 
-            // Comprobar que se han enviado los campos requeridos
-            // Name, OsType, Origin, BasedOn, Architectura, Desktop, Category, Status, Web, Description
-            if ($distro['name'] == "") {
-                $errors['name']['required'] = "El campo nombre es requerido";
-            }
-
-            if ($distro['ostype'] == "") {
-                $errors['ostype']['required'] = "El campo Os Type es requerido";
-            }
-
-            if (empty($distro['basedon'])) {
-                $errors['basedon']['required'] = "El campo based on debe tener al menos una opción seleccionada";
-            }
-            if (empty($distro['origin'])) {
-                $errors['origin']['required'] = "El campo origin debe tener al menos una opción seleccionada";
-            }
-
-            if (empty($distro['arch'])) {
-                $errors['arch']['required'] = "El campo architecture debe tener al menos una opción seleccionada";
-            }
-
-            if (empty($distro['desktop'])) {
-                $errors['desktop']['required'] = "El campo desktop debe tener al menos una opción seleccionada";
-            }
-
-            if (empty($distro['category'])) {
-                $errors['category']['required'] = "El campo Category es requerido";
-            }
-
-            if ($distro['status'] == "") {
-                $errors['status']['required'] = "El campo Status es requerido";
-            }
-            if ($distro['web'] == "") {
-                $errors['web']['required'] = "El campo web es requerido";
-            }
-
-            if ($distro['description'] == "") {
-                $errors['description']['required'] = "El campo Description es requerido";
-            }
-
-            if (empty($errors)) {
-                //dameDato($distro);
-                // Si no tengo errores de validación
-                // Guardo en la BD
-//                $sql = "INSERT INTO distro (image, name, ostype, basedon, origin, arch, desktop, category, status, version, web, doc, forums, error_tracker, description, created_at) VALUES (:image, :name, :ostype, :basedon, :origin, :arch, :desktop, :category, :status, :version, :web, :doc, :forums, :error_tracker, :description, NOW())";
-//
-//                $result = $this->pdo->prepare($sql);
-
+            if ($validator->validate($_POST)) {
                 $distro = new Distro([
                     'image' => $distro['image'],
                     'name' => $distro['name'],
                     'ostype' => $distro['ostype'],
                     'basedon' => implode(", ", $distro['basedon']),
                     'origin' => $distro['origin'],
-                    'arch' => implode(", ", $distro['arch']),
+                    'arch' => implode(", ", $distro['architecture']),
                     'desktop' => implode(", ", $distro['desktop']),
                     'category' => implode(", ", $distro['category']),
                     'status' => $distro['status'],
@@ -140,6 +109,8 @@ class DistrosController extends BaseController {
 
                 // Si se guarda sin problemas se redirecciona la aplicación a la página de inicio
                 header('Location: ' . BASE_URL);
+            }else{
+                $errors = $validator->getMessages();
             }
         }
 
@@ -216,14 +187,29 @@ class DistrosController extends BaseController {
         ];
 
         if( !empty($_POST)){
+            $validator = new Validator();
+
+            $requiredFieldMessageError = "El {label} es requerido";
+
+            $validator->add('name:Nombre', 'required',[],$requiredFieldMessageError);
+            $validator->add('ostype:Os Type', 'required', [], $requiredFieldMessageError);
+            $validator->add('basedon:Based On', 'required',[], $requiredFieldMessageError);
+            $validator->add('origin:Origen','required',[],$requiredFieldMessageError);
+            $validator->add('architecture:Arquitectura','required',[],$requiredFieldMessageError);
+            $validator->add('desktop:Desktop','required',[],$requiredFieldMessageError);
+            $validator->add('category:Categoría','required',[],$requiredFieldMessageError);
+            $validator->add('status:Estado','required',[],$requiredFieldMessageError);
+            $validator->add('web:Sitio Web', 'required',[], $requiredFieldMessageError);
+            $validator->add('description:Descripción','required',[],$requiredFieldMessageError);
+
             // Extraemos los datos enviados por POST
             $distro['id'] = $id;
-            $distro['name'] = htmlspecialchars(trim($_POST['distroName']));
+            $distro['name'] = htmlspecialchars(trim($_POST['name']));
             $distro['image'] = htmlspecialchars(trim($_POST['image']));
             $distro['ostype'] = $_POST['ostype'] ?? array();    // Si no se recibe nada se carga un array vacío
             $distro['basedon'] = $_POST['basedon'] ?? array();
             $distro['origin'] = htmlspecialchars(trim($_POST['origin']));
-            $distro['arch'] = $_POST['architecture'] ?? array();
+            $distro['architecture'] = $_POST['architecture'] ?? array();
             $distro['desktop'] = $_POST['desktop'] ?? array();
             $distro['category'] = $_POST['category'] ?? array();
             $distro['status'] = htmlspecialchars(trim($_POST['status']));
@@ -234,53 +220,7 @@ class DistrosController extends BaseController {
             $distro['error_tracker'] = htmlspecialchars(trim($_POST['errorTracker']));
             $distro['description'] = htmlspecialchars(trim($_POST['description']));
 
-            // Comprobar que se han enviado los campos requeridos
-            // Name, OsType, Origin, BasedOn, Architectura, Desktop, Category, Status, Web, Description
-            if( $distro['name'] == "" ){
-                $errors['name']['required'] = "El campo nombre es requerido";
-            }
-
-            if( $distro['ostype'] == "" ){
-                $errors['ostype']['required'] = "El campo Os Type es requerido";
-            }
-
-            if( empty($distro['basedon']) ){
-                $errors['basedon']['required'] = "El campo based on debe tener al menos una opción seleccionada";
-            }
-            if( empty($distro['origin']) ){
-                $errors['origin']['required'] = "El campo origin debe tener al menos una opción seleccionada";
-            }
-
-            if( empty($distro['arch']) ){
-                $errors['architecture']['required'] = "El campo architecture debe tener al menos una opción seleccionada";
-            }
-
-            if( empty($distro['desktop']) ){
-                $errors['desktop']['required'] = "El campo desktop debe tener al menos una opción seleccionada";
-            }
-
-            if( empty($distro['category']) ){
-                $errors['category']['required'] = "El campo Category es requerido";
-            }
-
-            if( $distro['status'] == "" ){
-                $errors['status']['required'] = "El campo Status es requerido";
-            }
-            if( $distro['web'] == "" ){
-                $errors['web']['required'] = "El campo web es requerido";
-            }
-
-            if( $distro['description'] == "" ){
-                $errors['description']['required'] = "El campo Description es requerido";
-            }
-
-            if ( empty($errors) ){
-                // Si no tengo errores de validación
-                // Guardo en la BD
-//                $sql = "UPDATE distro SET image = :image, name = :name, ostype = :ostype, basedon = :basedon, origin = :origin, arch = :arch, desktop = :desktop, category = :category, status = :status, version = :version, web = :web, doc = :doc, forums = :forums, error_tracker = :error_tracker, description = :description, updated_at = NOW() WHERE id = :id LIMIT 1";
-//
-//                $result = $this->pdo->prepare($sql);
-
+            if ( $validator->validate($_POST) ){
                 $distro = Distro::where('id', $id)->update([
                     'id'            => $distro['id'],
                     'image'         => $distro['image'],
@@ -288,7 +228,7 @@ class DistrosController extends BaseController {
                     'ostype'        => $distro['ostype'],
                     'basedon'       => implode(", ", $distro['basedon']),
                     'origin'        => $distro['origin'],
-                    'arch'          => implode(", ", $distro['arch']),
+                    'arch'          => implode(", ", $distro['architecture']),
                     'desktop'       => implode(", ", $distro['desktop']),
                     'category'      => implode(", ", $distro['category']),
                     'status'        => $distro['status'],
@@ -303,13 +243,9 @@ class DistrosController extends BaseController {
                 // Si se guarda sin problemas se redirecciona la aplicación a la página de inicio
                 header('Location: ' . BASE_URL);
             }else{
-                // Si tengo errores de validación
-                $error = true;
+                $errors = $validator->getMessages();
             }
         }
-
-        $error = !empty($errors);
-
         return $this->render('formDistros.twig', [
             'osTypeValues'  => $osTypeValues,
             'basedOnValues' => $basedOnValues,

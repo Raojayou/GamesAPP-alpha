@@ -4,46 +4,46 @@
 <div class="container">
     <h1>{{ webInfo.h1 }}</h1>
     <form method="post">
-        <div class="form-group {%  if errors['nameDistro']['required'] %}has-error{% endif %}">
+        <div class="form-group {%  if errors['name'] %}has-error{% endif %}">
             <label for="inputName">Name</label>
-            <input type="text" class="form-control" id="inputName" name="distroName" placeholder="Distro Name" value="{{ distro.name }}">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Distro Name" value="{{ distro.name }}">
         </div>
         {{ generateAlert(errors, 'name') }}
         <div class="form-group">
             <label for="inputImage">Image</label>
             <input type="text" class="form-control" id="inputImage" name="image" placeholder="Distro Image URL" value="{{ distro.image }}">
         </div>
-        <div class="form-group {% if errors['ostype']['required'] %}has-error{%  endif %}">
+        <div class="form-group {% if errors['ostype'] %}has-error{%  endif %}">
             <label for="inputOsType">Os Type</label>
             {{ generateSelect(osTypeValues, distro['ostype'], 'ostype', false) }}
         </div>
         {{  generateAlert(errors, 'ostype') }}
-        <div class="form-group {% if errors['basedon']['required'] %}has-error{% endif %}">
+        <div class="form-group {% if errors['basedon'] %}has-error{% endif %}">
             <label for="inputBasedOn">Based On</label>
             {{ generateSelect(basedOnValues, distro['basedon'], 'basedon', true) }}
         </div>
         {{ generateAlert(errors, 'basedon') }}
-        <div class="form-group {% if errors['origin']['required'] %}has-error{% endif %}">
+        <div class="form-group {% if errors['origin'] %}has-error{% endif %}">
             <label for="inputOrigin">Origin</label>
             {{ generateSelect(originValues, distro['origin'], 'origin') }}
         </div>
         {{ generateAlert(errors, 'origin') }}
-        <div class="form-group {% if errors['architecture']['required'] %}has-error{% endif %}">
+        <div class="form-group {% if errors['architecture'] %}has-error{% endif %}">
             <label for="inputArchitecture">Architecture</label>
-            {{ generateSelect(archValues, distro['arch'], 'architecture', true) }}
+            {{ generateSelect(archValues, distro['architecture'], 'architecture', true) }}
         </div>
-        {{  generateAlert(errors, 'arch') }}
-        <div class="form-group {% if errors['desktop']['required'] %}has-error{% endif %}">
+        {{  generateAlert(errors, 'architecture') }}
+        <div class="form-group {% if errors['desktop'] %}has-error{% endif %}">
             <label for="inputDesktop">Desktop</label>
             {{ generateSelect(desktopValues, distro['desktop'], 'desktop', true) }}
         </div>
-        {{ generateAlert(errors, desktop) }}
-        <div class="form-group {%  if errors['category']['required'] %}has-error{% endif %}">
+        {{ generateAlert(errors, 'desktop') }}
+        <div class="form-group {%  if errors['category'] %}has-error{% endif %}">
             <label for="inputCategory">Category</label>
             {{ generateSelect(categoryValues, distro['category'], 'category', true) }}
         </div>
         {{ generateAlert(errors, 'category') }}
-        <div class="form-group {% if errors['status']['required'] %}has-error{% endif %}">
+        <div class="form-group {% if errors['status'] %}has-error{% endif %}">
             <label for="inputStatus">Status</label>
             {{ generateSelect(statusValues, distro['status'], 'status') }}
         </div>
@@ -69,7 +69,7 @@
             <label for="inputError">Error Tracker</label>
             <input type="text" class="form-control" id="inputError" name="errorTracker" placeholder="Distro Official Error Tracker Website" value="{{ distro.errorTracker }}">
         </div>
-        <div class="form-group {% if errors['web']['required'] %}has-error{% endif %}">
+        <div class="form-group {% if errors['description'] %}has-error{% endif %}">
             <label for="inputDescription">Description</label>
             <textarea class="form-control" name="description" id="inputDescription" rows="5">{{ distro.description }}</textarea>
         </div>
