@@ -16,14 +16,17 @@ $baseDir = str_replace(
 $baseUrl = "http://" . $_SERVER['HTTP_HOST'] . $baseDir;
 define('BASE_URL', $baseUrl);
 
+$dotenv = new Dotenv\Dotenv(__DIR__.'/..');
+$dotenv->load();
+
 // Instancia de Eloquent
 $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
-    'host'      => 'localhost',
-    'database'  => 'distroadadb',
-    'username'  => 'manolo',
-    'password'  => 'manolo',
+    'host'      => getenv('DB_HOST'),
+    'database'  => getenv('DB_NAME'),
+    'username'  => getenv('DB_USER'),
+    'password'  => getenv('DB_PASS'),
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',

@@ -176,7 +176,7 @@ class DistrosController extends BaseController {
         ];
 
         // Recuperar datos
-        $distro = getDistro($id, $this->pdo);
+        $distro = Distro::find($id);
 
         if( !$distro ){
             header('Location: home.twig');
@@ -358,6 +358,7 @@ class DistrosController extends BaseController {
             ];
 
             $distro = Distro::find($id);
+
             if( !$distro ){
                 return $this->render('404.twig', ['webInfo' => $webInfo]);
             }
