@@ -30,7 +30,7 @@
         {{ generateAlert(errors, 'origin') }}
         <div class="form-group {% if errors['architecture'] %}has-error{% endif %}">
             <label for="inputArchitecture">Architecture</label>
-            {{ generateSelect(archValues, distro['architecture'], 'architecture', true) }}
+            {{ generateSelect(archValues, distro['arch'], 'architecture', true) }}
         </div>
         {{  generateAlert(errors, 'architecture') }}
         <div class="form-group {% if errors['desktop'] %}has-error{% endif %}">

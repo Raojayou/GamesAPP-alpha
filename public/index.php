@@ -40,6 +40,7 @@ $router = new RouteCollector();
 
 $router->controller('/', App\Controllers\HomeController::class);
 $router->controller('/distros', App\Controllers\DistrosController::class);
+$router->controller('/api', App\Controllers\ApiController::class);
 
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
