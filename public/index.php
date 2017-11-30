@@ -16,8 +16,11 @@ $baseDir = str_replace(
 $baseUrl = "http://" . $_SERVER['HTTP_HOST'] . $baseDir;
 define('BASE_URL', $baseUrl);
 
-$dotenv = new Dotenv\Dotenv(__DIR__.'/..');
-$dotenv->load();
+if(file_exists(__DIR__.'/../.env')){
+    $dotenv = new Dotenv\Dotenv(__DIR__.'/..');
+    $dotenv->load();
+}
+
 
 // Instancia de Eloquent
 $capsule = new Capsule;
