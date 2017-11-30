@@ -2,9 +2,9 @@
 
 {% block content %}
 <div class="container">
-    <h1>{{ distro.name }}</h1>
+    <h1>{{ distro.name|raw }}</h1>
     <a class="btn btn-default" href="{{ distro.web }}" target="_blank" role="button">Web</a>
     <hr>
-    <p class="col-lg-12">{{ distro.description }}</p>
+    <p class="col-lg-12">{{ distro.description|raw }}</p>
 </div>
 {% endblock %}

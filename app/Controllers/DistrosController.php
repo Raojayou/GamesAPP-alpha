@@ -73,12 +73,12 @@ class DistrosController extends BaseController {
             // Extraemos los datos enviados por POST
             $distro['name'] = htmlspecialchars(trim($_POST['name']));
             $distro['image'] = htmlspecialchars(trim($_POST['image']));
-            $distro['ostype'] = $_POST['ostype'] ?? array();    // Si no se recibe nada se carga un array vacío
-            $distro['basedon'] = $_POST['basedon'] ?? array();
+            $distro['ostype'] = $_POST['ostype'];
+            $distro['basedon'] = $_POST['basedon'];
             $distro['origin'] = htmlspecialchars(trim($_POST['origin']));
-            $distro['architecture'] = $_POST['architecture'] ?? array();
-            $distro['desktop'] = $_POST['desktop'] ?? array();
-            $distro['category'] = $_POST['category'] ?? array();
+            $distro['architecture'] = $_POST['architecture'];
+            $distro['desktop'] = $_POST['desktop'];
+            $distro['category'] = $_POST['category'];
             $distro['status'] = htmlspecialchars(trim($_POST['status']));
             $distro['version'] = htmlspecialchars(trim($_POST['version']));
             $distro['web'] = htmlspecialchars(trim($_POST['web']));
@@ -89,21 +89,21 @@ class DistrosController extends BaseController {
 
             if ($validator->validate($_POST)) {
                 $distro = new Distro([
-                    'image' => $distro['image'],
-                    'name' => $distro['name'],
-                    'ostype' => $distro['ostype'],
-                    'basedon' => implode(", ", $distro['basedon']),
-                    'origin' => $distro['origin'],
-                    'arch' => implode(", ", $distro['architecture']),
-                    'desktop' => implode(", ", $distro['desktop']),
-                    'category' => implode(", ", $distro['category']),
-                    'status' => $distro['status'],
-                    'version' => $distro['version'],
-                    'web' => $distro['web'],
-                    'doc' => $distro['doc'],
-                    'forums' => $distro['forums'],
+                    'image'         => $distro['image'],
+                    'name'          => $distro['name'],
+                    'ostype'        => $distro['ostype'],
+                    'basedon'       => $distro['basedon'],
+                    'origin'        => $distro['origin'],
+                    'architecture'  => $distro['architecture'],
+                    'desktop'       => $distro['desktop'],
+                    'category'      => $distro['category'],
+                    'status'        => $distro['status'],
+                    'version'       => $distro['version'],
+                    'web'           => $distro['web'],
+                    'doc'           => $distro['doc'],
+                    'forums'        => $distro['forums'],
                     'error_tracker' => $distro['errorTracker'],
-                    'description' => $distro['description']
+                    'description'   => $distro['description']
                 ]);
                 $distro->save();
 
@@ -206,12 +206,12 @@ class DistrosController extends BaseController {
             $distro['id'] = $id;
             $distro['name'] = htmlspecialchars(trim($_POST['name']));
             $distro['image'] = htmlspecialchars(trim($_POST['image']));
-            $distro['ostype'] = $_POST['ostype'] ?? array();    // Si no se recibe nada se carga un array vacío
-            $distro['basedon'] = $_POST['basedon'] ?? array();
+            $distro['ostype'] = $_POST['ostype'];    // Si no se recibe nada se carga un array vacío
+            $distro['basedon'] = $_POST['basedon'];
             $distro['origin'] = htmlspecialchars(trim($_POST['origin']));
-            $distro['architecture'] = $_POST['architecture'] ?? array();
-            $distro['desktop'] = $_POST['desktop'] ?? array();
-            $distro['category'] = $_POST['category'] ?? array();
+            $distro['architecture'] = $_POST['architecture'];
+            $distro['desktop'] = $_POST['desktop'];
+            $distro['category'] = $_POST['category'];
             $distro['status'] = htmlspecialchars(trim($_POST['status']));
             $distro['version'] = htmlspecialchars(trim($_POST['version']));
             $distro['web'] = htmlspecialchars(trim($_POST['web']));
@@ -226,11 +226,11 @@ class DistrosController extends BaseController {
                     'image'         => $distro['image'],
                     'name'          => $distro['name'],
                     'ostype'        => $distro['ostype'],
-                    'basedon'       => implode(", ", $distro['basedon']),
+                    'basedon'       => $distro['basedon'],
                     'origin'        => $distro['origin'],
-                    'arch'          => implode(", ", $distro['architecture']),
-                    'desktop'       => implode(", ", $distro['desktop']),
-                    'category'      => implode(", ", $distro['category']),
+                    'architecture'  => $distro['architecture'],
+                    'desktop'       => $distro['desktop'],
+                    'category'      => $distro['category'],
                     'status'        => $distro['status'],
                     'version'       => $distro['version'],
                     'web'           => $distro['web'],
@@ -294,6 +294,8 @@ class DistrosController extends BaseController {
             ];
 
             $distro = Distro::find($id);
+
+            //$distro['description'] = html_entity_decode($distro['description']);
 
             if( !$distro ){
                 return $this->render('404.twig', ['webInfo' => $webInfo]);
