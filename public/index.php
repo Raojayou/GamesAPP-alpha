@@ -5,7 +5,6 @@ use Phroute\Phroute\RouteCollector;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 // Punto de entrada a la aplicación
-require_once '../arrays.php';
 require_once '../helpers.php';
 
 $baseDir = str_replace(
