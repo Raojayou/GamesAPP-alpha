@@ -21,4 +21,16 @@ class HomeController extends BaseController {
     public function getLogin(){
         return $this->render('auth/login.twig',[]);
     }
+
+    public function postLogin(){
+        return 'Intento de login';
+    }
+
+    public function getRegistro(){
+        return $this->render('auth/register.twig',[]);
+    }
+
+    public function postRegistro(){
+
+    }
 }
