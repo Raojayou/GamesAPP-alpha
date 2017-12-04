@@ -265,7 +265,7 @@ class DistrosController extends BaseController {
      *
      * @return string Render de la web con toda la información.
      *
-     * Ruta [GET] /distro/{id} que muestra la página de detalle de la distribución.
+     * Ruta [GET] /distros/{id} que muestra la página de detalle de la distribución.
      * todo: La vista de detalle está pendiente de implementar.
      *
      * @param id Código de la distribución.

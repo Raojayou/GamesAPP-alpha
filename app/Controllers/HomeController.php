@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-class HomeController {
+class HomeController extends BaseController {
 
     /**
      * Ruta / donde se muestra la página de inicio del proyecto.
@@ -16,5 +16,9 @@ class HomeController {
 
     public function getContacto(){
         return 'Información de contacto';
+    }
+
+    public function getLogin(){
+        return $this->render('login.twig',[]);
     }
 }
