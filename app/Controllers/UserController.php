@@ -11,7 +11,7 @@ class UserController extends BaseController {
     public function getIndex(){
         $users = User::all();
 
-        return $this->render('',[]);
+        return $this->render('auth/login.twig',[]);
     }
 
 

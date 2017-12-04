@@ -19,6 +19,6 @@ class HomeController extends BaseController {
     }
 
     public function getLogin(){
-        return $this->render('login.twig',[]);
+        return $this->render('auth/login.twig',[]);
     }
 }
