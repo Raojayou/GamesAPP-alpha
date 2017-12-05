@@ -14,6 +14,8 @@ class BaseController {
             'cache' => false
         ]);
 
+        $this->templateEngine->addGlobal('session', $_SESSION);
+
         // Extender Twig
         // Filtros: toman una cadena y la modifican
         $this->templateEngine->addFilter(new \Twig_SimpleFilter('url', function($path){

@@ -22,6 +22,9 @@ class HomeController extends BaseController {
     }
 
     public function getLogin(){
+        if( isset($_SESSION['userId']) ){
+            header('Location: '. BASE_URL);
+        }
         return $this->render('auth/login.twig',[]);
     }
 
@@ -49,7 +52,9 @@ class HomeController extends BaseController {
 
         $errors = $validator->getMessages();
 
-        return $this->render('auth/login.twig', ['errors' => $errors]);
+        return $this->render('auth/login.twig', [
+            'errors' => $errors
+        ]);
     }
 
     public function getRegistro(){
@@ -84,6 +89,15 @@ class HomeController extends BaseController {
         }
 
         return $this->render('auth/register.twig', ['errors' => $errors]);
+    }
+
+    public function getLogout(){
+        //session_destroy();
+        unset($_SESSION['userId']);
+        unset($_SESSION['userName']);
+        unset($_SESSION['userEmail']);
+
+        header("Location: ". BASE_URL);
     }
 }
 

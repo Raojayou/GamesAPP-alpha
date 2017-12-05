@@ -7,6 +7,8 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 // Punto de entrada a la aplicación
 require_once '../helpers.php';
 
+session_start();
+
 $baseDir = str_replace(
     basename($_SERVER['SCRIPT_NAME']),
     '',
