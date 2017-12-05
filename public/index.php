@@ -42,9 +42,42 @@ $route = $_GET['route'] ?? "/";
 
 $router = new RouteCollector();
 
-$router->controller('/', App\Controllers\HomeController::class);
-$router->controller('/distros', App\Controllers\DistrosController::class);
-$router->controller('/api', App\Controllers\ApiController::class);
+// Filtro para aplicar a rutas a USUARIOS AUTENTICADOS
+// en el sistema
+$router->filter('auth', function(){
+    if(!isset($_SESSION['userId'])){
+        header('Location: '. BASE_URL);
+        return false;
+    }
+});
+
+// Filtro para aplicar a rutas a USUARIOS NO AUTENTICADOS
+// en el sistema
+$router->filter('noAuth', function(){
+    if( isset($_SESSION['userId'])){
+        header('Location: '. BASE_URL);
+        return false;
+    }
+});
+
+$router->group(['before' => 'noAuth'], function ($router){
+    $router->get('/login', ['\App\Controllers\HomeController', 'getLogin']);
+    $router->post('/login', ['\App\Controllers\HomeController', 'postLogin']);
+    $router->get('/registro', ['\App\Controllers\HomeController', 'getRegistro']);
+    $router->post('/registro', ['\App\Controllers\HomeController', 'postRegistro']);
+});
+
+$router->group(['before' => 'auth'], function ($router){
+
+    $router->controller('/distros', App\Controllers\DistrosController::class);
+    $router->get('/logout', ['\App\Controllers\HomeController', 'getLogout']);
+});
+
+
+$router->get('/',['\App\Controllers\HomeController', 'getIndex']);
+
+//$router->controller('/', App\Controllers\HomeController::class);
+
 
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
