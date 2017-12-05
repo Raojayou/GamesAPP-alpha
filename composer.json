@@ -9,6 +9,7 @@
         "twig/twig": "^2.4",
         "illuminate/database": "^5.5",
         "vlucas/phpdotenv": "^2.4",
-        "siriusphp/validation": "^2.2"
+        "siriusphp/validation": "^2.2",
+        "monolog/monolog": "^1.23"
     }
 }

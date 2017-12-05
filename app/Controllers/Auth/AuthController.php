@@ -3,6 +3,7 @@
 namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
+use App\Log;
 use App\Models\User;
 use Sirius\Validation\Validator;
 
@@ -32,6 +33,8 @@ class AuthController extends BaseController {
 
             $validator->addMessage('authError','Los datos son incorrectos');
         }
+
+        Log::logInfo('Intento fallido de login '. $_POST['inputEmail']);
 
         $errors = $validator->getMessages();
 
