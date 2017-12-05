@@ -51,6 +51,15 @@ $router->filter('auth', function(){
     }
 });
 
+$router->group(['before' => 'auth'], function ($router){
+    $router->get('/distros/new', ['\App\Controllers\DistrosController', 'getNew']);
+    $router->post('/distros/new', ['\App\Controllers\DistrosController', 'postNew']);
+    $router->get('/distros/edit/{id}', ['\App\Controllers\DistrosController', 'getEdit']);
+    $router->put('/distros/edit/{id}', ['\App\Controllers\DistrosController', 'putEdit']);
+    $router->delete('/distros/', ['\App\Controllers\DistrosController', 'deleteIndex']);
+    $router->get('/logout', ['\App\Controllers\HomeController', 'getLogout']);
+});
+
 // Filtro para aplicar a rutas a USUARIOS NO AUTENTICADOS
 // en el sistema
 $router->filter('noAuth', function(){
@@ -67,17 +76,9 @@ $router->group(['before' => 'noAuth'], function ($router){
     $router->post('/registro', ['\App\Controllers\HomeController', 'postRegistro']);
 });
 
-$router->group(['before' => 'auth'], function ($router){
-
-    $router->controller('/distros', App\Controllers\DistrosController::class);
-    $router->get('/logout', ['\App\Controllers\HomeController', 'getLogout']);
-});
-
-
+// Rutas sin filtros
 $router->get('/',['\App\Controllers\HomeController', 'getIndex']);
-
-//$router->controller('/', App\Controllers\HomeController::class);
-
+$router->get('/distros/{id}', ['\App\Controllers\DistrosController', 'getIndex']);
 
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
