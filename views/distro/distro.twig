@@ -1,0 +1,168 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col-lg-2">
+                    <img src="{{ distro.image }}" alt="{{ distro.name }}">
+                </div>
+                <div class="col-lg-10 title">
+                    <div class="col-lg-12">
+                        <h1>{{ distro.name|raw }}</h1>
+                    </div>
+                    <div class="col-lg-5">
+                        <p>Tipo: <strong>{{  distro.ostype | raw }}</strong></p>
+                        <p>Basada en: <strong>{{  distro.basedon | raw }}</strong></p>
+                    </div>
+                    <div class="col-lg-5">
+                        <p>Version: <strong>{{  distro.version | raw }}</strong></p>
+                        <p>Estado: <strong>{{  distro.status | raw }}</strong></p>
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="row data">
+                <div class="col-lg-2">
+                    <p><strong>Arquitecturas: </strong></p>
+                </div>
+                <div class="col-lg-10">
+                    {% set arquitecturas = distro.architecture|split(', ') %}
+                    {% for arquitectura in arquitecturas %}
+                    <span class="label label-primary">{{ arquitectura }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row data">
+                <div class="col-lg-2">
+                    <p><strong>Escritorios: </strong></p>
+                </div>
+                <div class="col-lg-10">
+                    {% set desktops = distro.desktop|split(', ') %}
+                    {% for desktop in desktops %}
+                        <span class="label label-success">{{ desktop }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row data">
+                <div class="col-lg-2">
+                    <p><strong>Categorías: </strong></p>
+                </div>
+                <div class="col-lg-10">
+                    {% set categories = distro.category|split(', ') %}
+                    {% for category in categories %}
+                        <span class="label label-info">{{ category }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row data">
+                <div class="col-lg-2">
+                    <p><strong>Origen: </strong></p>
+                </div>
+                <div class="col-lg-10">
+                    {% set countries = distro.origin|split(', ') %}
+                    {% for country in countries %}
+                        <span class="label label-default">{{ country }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row data">
+                <div class="col-lg-2">
+                    <p><strong>Web: </strong></p>
+                </div>
+                <div class="col-lg-10">
+                    <a href="{{ distro.web }}" target="_blank">{{ distro.name }} Sitio oficial</a>
+                </div>
+            </div>
+            <div class="row data">
+                <div class="col-lg-2">
+                    <p><strong>Documentacion: </strong></p>
+                </div>
+                <div class="col-lg-10">
+                    <a href="{{ distro.doc }}" target="_blank">{{ distro.name }} Documentación</a>
+                </div>
+            </div>
+            <div class="row data">
+                <div class="col-lg-2">
+                    <p><strong>Foros: </strong></p>
+                </div>
+                <div class="col-lg-10">
+                    <a href="{{ distro.forums }}" target="_blank">{{ distro.name }} Foros</a>
+                </div>
+            </div>
+            <div class="row data">
+                <div class="col-lg-2">
+                    <p><strong>Error Tracker: </strong></p>
+                </div>
+                <div class="col-lg-10">
+                    <a href="{{ distro.error_tracker }}" target="_blank">{{ distro.name }} Errores</a>
+                </div>
+            </div>
+            <hr>
+            <div class="row data">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Descripción</div>
+                        <div class="panel-body">{{ distro.description }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row data">
+                <div class="col-lg-12">
+                    <form class="form-comment" method="POST" action="">
+                        <h2 class="form-comment-heading">Deja tu Comentario</h2>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group  {%  if errors['name'] %}has-error{% endif %}">
+                                    <label for="inputName">Nombre</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de usuario" value="">
+                                </div>
+                                {{ generateAlert(errors, 'name') }}
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group  {%  if errors['email'] %}has-error{% endif %}">
+                                    <label for="inputName">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="email" value="">
+                                </div>
+                                {{ generateAlert(errors, 'email') }}
+                            </div>
+                        </div>
+
+                        <div class="form-group {% if errors['comment'] %}has-error{% endif %}">
+                            <label for="inputDescription">Comentario</label>
+                            <textarea class="form-control" name="comment" id="comment" rows="5"></textarea>
+                        </div>
+                        {{ generateAlert(errors, 'comment') }}
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Añadir Comentario</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <h2>Opiniones de los usuarios</h2>
+            {% if comments|length == 0 %}
+                <h4>Todavía no hay comentarios</h4>
+            {% else %}
+                {% for comment in comments %}
+                    <h4>Según {{ comment.user }}:</h4>
+                    <p>{{ comment.text }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+{% endblock %}
+

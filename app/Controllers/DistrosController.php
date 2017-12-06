@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Comment;
 use App\Models\Distro;
 use Sirius\Validation\Validator;
 
@@ -294,19 +295,69 @@ class DistrosController extends BaseController {
             ];
 
             $distro = Distro::find($id);
-
-            //$distro['description'] = html_entity_decode($distro['description']);
+            $comments = Comment::where('distro_id', $id)->orderBy('created_at','DESC')->get();
 
             if( !$distro ){
                 return $this->render('404.twig', ['webInfo' => $webInfo]);
             }
 
             //dameDato($distro);
-            return $this->render('distro.twig', [
-                'distro' => $distro,
-                'webInfo'=> $webInfo]);
+            return $this->render('distro/distro.twig', [
+                'distro'    => $distro,
+                'webInfo'   => $webInfo,
+                'comments'  => $comments
+            ]);
         }
 
+    }
+
+    public function postIndex($id){
+        $errors = [];
+        $validator = new Validator();
+
+        $validator->add('name:Nombre','required', [], 'El {label} es necesario para comentar');
+        $validator->add('name:Nombre','minlength', ['min' => 5], 'El {label} debe tener al menos 5 caracteres');
+        $validator->add('email:Email','required', [], 'El {label} no es válido');
+        $validator->add('email:Email','required', [], 'El {label} es necesario para comentar');
+        $validator->add('comment:Comentario', 'required', [], 'Aunque los silencios a veces dicen mucho no se permiten comentarios vacíos');
+
+        if($validator->validate($_POST)){
+            $comment = new Comment();
+
+            $comment->distro_id = $id;
+            $comment->user = $_POST['name'];
+            $comment->email = $_POST['email'];
+            $comment->ip = getRealIP();
+            $comment->text = $_POST['comment'];
+            $comment->approved = true;
+
+            $comment->save();
+
+            header("Refresh: 0 " );
+        }else{
+            $errors = $validator->getMessages();
+        }
+
+        $webInfo = [
+            'title' => 'Página de Distro - DistroADA'
+        ];
+
+        $distro = Distro::find($id);
+        $comments = Comment::all();
+        $webInfo = [
+            'title' => 'Página de Distro - DistroADA'
+        ];
+
+        if( !$distro ){
+            return $this->render('404.twig', ['webInfo' => $webInfo]);
+        }
+
+        return $this->render('distro/distro.twig', [
+            'errors'    => $errors,
+            'webInfo'   => $webInfo,
+            'distro'    => $distro,
+            'comments'  => $comments
+        ]);
     }
 
     /**

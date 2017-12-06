@@ -10,6 +10,13 @@ body{
     color: red;
 }
 
+.title h1 {
+    margin-top: 0px;
+}
+
+.data {
+    margin: 5px;
+}
 /* Estilos para el autocomplete */
 
 .tt-query {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 05, 2017 at 09:26 PM
+-- Generation Time: Dec 06, 2017 at 06:55 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.8
 
@@ -13,6 +13,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `distroadadb`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comment`
+--
+
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL,
+  `distro_id` int(11) NOT NULL,
+  `user` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `ip` varchar(50) NOT NULL,
+  `text` text NOT NULL,
+  `approved` tinyint(1) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`id`, `distro_id`, `user`, `email`, `ip`, `text`, `approved`, `created_at`, `updated_at`) VALUES
+  (6, 16, 'Fran Thinway', 'thinway@ymail.com', '::1', 'Todos los caminos llevan a Debian.', 1, '2017-12-06 13:01:15', '2017-12-06 13:01:15');
 
 -- --------------------------------------------------------
 
@@ -54,8 +79,7 @@ INSERT INTO `distro` (`id`, `image`, `name`, `ostype`, `basedon`, `origin`, `arc
   (19, 'http://distrowatch.com/images/yvzhuwbpy/antergos.png', 'Antergos', 'Linux', 'Arch', 'España', 'x86_64', 'Cinnamon, GNOME, KDE, MATE, Openbox, Xfce', 'Desktop, Live Medium', 'Active', '', 'https://www.antergos.com/', 'https://wiki.antergos.com/', 'https://forum.antergos.com/', 'https://bugs.antergos.com/', 'Antergos es un sistema operativo moderno, elegante y poderoso basado en Arch Linux. Cobró vida bajo el nombre de Cinnarch, combinando el escritorio de Cinnamon con la distribución de Arch Linux, pero el proyecto se ha apartado de sus metas originales y ahora ofrece una variedad de escritorios que incluyen a GNOME 3 (por defecto), a Cinnamon, a Razor-qt y a Xfce. Antergos también provee su propio programa gráfico de instalación.', '2017-11-29 15:28:38', '2017-11-29 15:28:38'),
   (20, 'http://distrowatch.com/images/yvzhuwbpy/solus.png', 'Solus', 'Linux', 'Independent', 'Irlanda', '', 'Budgie, GNOME, MATE', 'Desktop, Live Medium', 'Active', '3', 'https://solus-project.com/', 'https://wiki.solus-project.com/', 'https://solus-project.com/forums/', 'https://dev.solus-project.com/', 'Solus es una distribución de Línux hecha desde cero. Usa una versión derivada del manejador de paquetes PiSi, mantenida como &quot;eopkg&quot; dentro de Solus y un ambiente de escritorio personalizado hecho por ellos mismos llamado &quot;Budgie&quot;. Este escritorio, el cual puede ser configurado para emular la apariencia y sensación del de GNOME 2, está fuertemente integrado con el GNOME stack. La distribución está disponible sólo para computadoras de 64 bits.', '2017-11-29 16:57:33', '2017-11-29 16:57:33'),
   (48, 'http://distrowatch.com/images/yvzhuwbpy/fedora.png', 'Fedora', 'Linux', 'Independent', 'USA', 'armhf, i686, x86_64', 'Awesome, Cinnamon, Enlightenment, GNOME, KDE Plasma, LXDE, MATE, Openbox, Ratpoison, Xfce', 'Desktop, Server, Live Medium', 'Active', '27', 'https://getfedora.org/', 'http://docs.fedoraproject.org/', 'https://forums.fedoraforum.org/', 'https://bugzilla.redhat.com/', 'Fedora (antes Fedora Core) es una distribución Línux desarrollada por la comunidad que apoya al proyecto Fedora, propiedad de Red Hat. Fedora contiene programas distribuidos bajo una licencia libre y de código abierto que apunta a estar en la vanguardia de tales tecnologías. Fedora tiene una reputación por enfocarse en la innovación, integrar nuevas tecnologías tempranamente y trabajar de cerca con las comunidades Línux principales. El escritorio por defecto en Fedora es el ambiente GNOME y la interfaz por defecto es el GNOME Shell. Otros escritorios, incluyendo KDE, Xfce, LXDE, MATE y Cinnamon están disponibles. El proyecto Fedora también distribuye variaciones personalizadas de Fedora llamadas Fedora spins (variantes Fedora). Éstas están construidas con juegos específicos de paquetes de programas ofreciendo ambientes de escritorio alternativos o enfocándose en intereses específicos como juegos, seguridad, diseño, computación científica y robótica.', '2017-11-29 18:19:19', '2017-11-29 18:19:19'),
-  (49, 'https://ubuntuforums.org/customavatars/avatar335031_3.gif', 'Truñix', 'Linux', 'Independent', 'España', 'i386, i486', 'GNOME, KDE', 'Desktop, Live Medium', 'Active', '10', 'http://trunix.com', 'http://trunix.com/distro', 'http://trunix.com', 'http://trunix.com', 'Lorem fistrum pupita te va a hasé pupitaa ese pedazo de. Te voy a borrar el cerito al ataquerl hasta luego Lucas a wan condemor mamaar hasta luego Lucas tiene musho peligro. Te va a hasé pupitaa tiene musho peligro pupita la caidita a peich se calle ustée ese hombree condemor quietooor te voy a borrar el cerito. La caidita tiene musho peligro fistro sexuarl. Fistro ese pedazo de torpedo al ataquerl está la cosa muy malar quietooor a gramenawer qué dise usteer. Tiene musho peligro torpedo diodenoo la caidita a wan está la cosa muy malar apetecan al ataquerl tiene musho peligro tiene musho peligro torpedo. Está la cosa muy malar se calle ustée te voy a borrar el cerito qué dise usteer va usté muy cargadoo a peich llevame al sircoo quietooor sexuarl quietooor.', '2017-11-30 09:12:43', '2017-11-30 09:16:41'),
-  (50, 'https://ubuntuforums.org/customavatars/avatar335031_3.gif', 'Franix', 'Linux', 'Debian', 'España', 'arm', 'MATE, GNOME', 'Desktop, Live Medium', 'Active', '10', 'http://trunix.com', 'http://trunix.com/doc', 'http://trunix.com/forum', 'http://trunix.com/bugs', 'Lorem fistrum pupita te va a hasé pupitaa ese pedazo de. Te voy a borrar el cerito al ataquerl hasta luego Lucas a wan condemor mamaar hasta luego Lucas tiene musho peligro. Te va a hasé pupitaa tiene musho peligro pupita la caidita a peich se calle ustée ese hombree condemor quietooor te voy a borrar el cerito. La caidita tiene musho peligro fistro sexuarl. Fistro ese pedazo de torpedo al ataquerl está la cosa muy malar quietooor a gramenawer qué dise usteer. Tiene musho peligro torpedo diodenoo la caidita a wan está la cosa muy malar apetecan al ataquerl tiene musho peligro tiene musho peligro torpedo. Está la cosa muy malar se calle ustée te voy a borrar el cerito qué dise usteer va usté muy cargadoo a peich llevame al sircoo quietooor sexuarl quietooor.', '2017-11-30 20:34:36', '2017-11-30 20:34:36');
+  (50, 'https://ubuntuforums.org/customavatars/avatar335031_3.gif', 'Franixus', 'Linux', 'Debian', 'España', 'arm', 'MATE, GNOME', 'Desktop, Live Medium', 'Active', '10', 'http://trunix.com', 'http://trunix.com/doc', 'http://trunix.com/forum', 'http://trunix.com/bugs', 'Lorem fistrum pupita te va a hasé pupitaa ese pedazo de. Te voy a borrar el cerito al ataquerl hasta luego Lucas a wan condemor mamaar hasta luego Lucas tiene musho peligro. Te va a hasé pupitaa tiene musho peligro pupita la caidita a peich se calle ustée ese hombree condemor quietooor te voy a borrar el cerito. La caidita tiene musho peligro fistro sexuarl. Fistro ese pedazo de torpedo al ataquerl está la cosa muy malar quietooor a gramenawer qué dise usteer. Tiene musho peligro torpedo diodenoo la caidita a wan está la cosa muy malar apetecan al ataquerl tiene musho peligro tiene musho peligro torpedo. Está la cosa muy malar se calle ustée te voy a borrar el cerito qué dise usteer va usté muy cargadoo a peich llevame al sircoo quietooor sexuarl quietooor.', '2017-11-30 20:34:36', '2017-12-05 22:09:05');
 
 -- --------------------------------------------------------
 
@@ -73,8 +97,21 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES
+  (8, 'thinway', 'thinway@ymail.com', '$2y$10$ftG6n.AecTx55kb41WPNcOwzLI4TDpZccPFD8TlQ2dO.ist/DN9gm', '2017-12-05 22:06:44', '2017-12-05 22:06:44');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `distro`
@@ -93,6 +130,11 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+--
 -- AUTO_INCREMENT for table `distro`
 --
 ALTER TABLE `distro`
@@ -101,4 +143,4 @@ ALTER TABLE `distro`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;

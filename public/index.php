@@ -79,6 +79,7 @@ $router->group(['before' => 'noAuth'], function ($router){
 // Rutas sin filtros
 $router->get('/',['\App\Controllers\HomeController', 'getIndex']);
 $router->get('/distros/{id}', ['\App\Controllers\DistrosController', 'getIndex']);
+$router->post('/distros/{id}', ['\App\Controllers\DistrosController', 'postIndex']);
 
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 
