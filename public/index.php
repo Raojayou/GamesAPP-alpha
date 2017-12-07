@@ -80,6 +80,7 @@ $router->group(['before' => 'noAuth'], function ($router){
 $router->get('/',['\App\Controllers\HomeController', 'getIndex']);
 $router->get('/distros/{id}', ['\App\Controllers\DistrosController', 'getIndex']);
 $router->post('/distros/{id}', ['\App\Controllers\DistrosController', 'postIndex']);
+$router->controller('/api', App\Controllers\ApiController::class);
 
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());
 

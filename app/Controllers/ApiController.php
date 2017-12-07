@@ -3,24 +3,21 @@ namespace App\Controllers;
 
 use App\Models\Distro;
 
-class ApiController {
+class ApiController
+{
 
-    public function getDistros(){
-        $distros = Distro::all();
+    public function getDistros($id = null)
+    {
+        if (is_null($id)) {
+            $distros = Distro::all();
 
-        header('Content-Type: application/json');
-        return json_encode($distros);
-    }
+            header('Content-Type: application/json');
+            return json_encode($distros);
+        } else {
+            $distro = Distro::find($id);
 
-    public function getDistro($id){
-        $distro = Distro::find($id);
-
-        header('Content-Type: application/json');
-        return json_encode($distro);
-    }
-
-    public function postDistro(){
-        //Creo una distro en la BD desde un Json
-        
+            header('Content-Type: application/json');
+            return json_encode($distro);
+        }
     }
 }
