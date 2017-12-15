@@ -1,10 +1,10 @@
-# Instalación
+# Instalación :hash:
 Configurar el archivo **.env.example** con tus datos de acceso a la base de datos. Renombrar el **.env.example a .env**
 
-## Cargar la base de datos
+## Cargar la base de datos  :ballot_box_with_check:
 Debes importar en tu servidor de bases de datos el archivo **_createdb.sql_** para cargar la base de datos correspondiente a esta aplicacion.
 
-# Guia de uso
+# Guia de uso :clipboard:
 
 Para ir a la página de inicio debes pulsar en **GamesAPP** que está en el menú de navegación.
 ***
