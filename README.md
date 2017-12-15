@@ -14,10 +14,10 @@ Para ir a la página de inicio debes pulsar en **GamesAPP** que está en el men�
 
 ***
     - Si el usuario no tiene una cuenta creada, deberá registrarse y logearse.
-    - Para ello hay un menú desplegable con el nombre *"Acceso"*, hay una opción llamada _"Registro"_ que redireccionará al formulario de registro.
+    - Para ello hay un menú desplegable con el nombre "Acceso", hay una opción llamada "Registro" que redireccionará al formulario de registro.
 ***
 ***
-    - Una vez registrado el usuario sólo tendrá que loguearse. Para ello en el menú desplegable _"Acceso"_ hay otra opción que te redirige al formulario de _"Login"_.
+    - Una vez registrado el usuario sólo tendrá que loguearse. Para ello en el menú desplegable "Acceso" hay otra opción que te redirige al formulario de "Login".
     - Cuándo el usuario consiga loguearse, ya podrá usar las demás opciones de la aplicación.
 ***
 ***
