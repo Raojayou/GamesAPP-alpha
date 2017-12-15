@@ -1,10 +1,10 @@
-#Instalación
+# Instalación
 Configurar el archivo **.env.example** con tus datos de acceso a la base de datos. Renombrar el **.env.example a .env**
 
-##Cargar la base de datos
+## Cargar la base de datos
 Debes importar en tu servidor de bases de datos el archivo **_createdb.sql_** para cargar la base de datos correspondiente a esta aplicacion.
 
-#Guia de uso
+# Guia de uso
 
 Para ir a la página de inicio debes pulsar en **GamesAPP** que está en el menú de navegación.
 ***
@@ -35,6 +35,4 @@ Para ir a la página de inicio debes pulsar en **GamesAPP** que está en el men�
 ***
     - Finalmente está el sistema de cerrar sesión(Logout) en el menú desplegable.
     - Cierra la sesion utilizada para usar la aplicación.
-***"# GameAPP-alpha" 
-"# GameAPP-alpha" 
-"# GameAPP-alpha" 
+***
