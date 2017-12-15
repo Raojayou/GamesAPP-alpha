@@ -13,9 +13,9 @@ class HomeController extends BaseController {
      * @return string Render de la página
      */
     public function getIndex(){
-        $distros = new DistrosController();
+        $games = new GamesController();
 
-        return $distros->getIndex();
+        return $games->getIndex();
     }
 
     public function getContacto(){
@@ -52,15 +52,3 @@ class HomeController extends BaseController {
         return $auth->getLogout();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

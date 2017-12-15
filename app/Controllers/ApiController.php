@@ -1,23 +1,22 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\Distro;
+use App\Models\Game;
 
 class ApiController
 {
-
-    public function getDistros($id = null)
+    public function getGames($id = null)
     {
         if (is_null($id)) {
-            $distros = Distro::all();
+            $games = Game::all();
 
             header('Content-Type: application/json');
-            return json_encode($distros);
+            return json_encode($games);
         } else {
-            $distro = Distro::find($id);
+            $game = Game::find($id);
 
             header('Content-Type: application/json');
-            return json_encode($distro);
+            return json_encode($game);
         }
     }
 }

@@ -1,0 +1,5 @@
+DB_HOST=localhost
+DB_PORT=8999
+DB_NAME=gamesdb
+DB_USER=josan
+DB_PASS=josan

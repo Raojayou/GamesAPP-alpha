@@ -1,13 +1,13 @@
 body{
     padding-top: 70px;
-    background-color: #EAEDED;
+    background-color: #FFFFFF;
 }
 
 .editar {
-    color: #FABADA;
+    color: #4271F4;
 }
 .borrar {
-    color: red;
+    color: #910101;
 }
 
 .title h1 {
@@ -16,6 +16,10 @@ body{
 
 .data {
     margin: 5px;
+}
+img {
+    width: 140px;
+    height: 150px;
 }
 /* Estilos para el autocomplete */
 

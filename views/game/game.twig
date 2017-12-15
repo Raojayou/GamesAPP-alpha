@@ -6,19 +6,11 @@
         <div class="col-lg-8">
             <div class="row">
                 <div class="col-lg-2">
-                    <img src="{{ distro.image }}" alt="{{ distro.name }}">
+                    <img src="{{ game.image }}" alt="{{ game.name }}">
                 </div>
                 <div class="col-lg-10 title">
                     <div class="col-lg-12">
-                        <h1>{{ distro.name|raw }}</h1>
-                    </div>
-                    <div class="col-lg-5">
-                        <p>Tipo: <strong>{{  distro.ostype | raw }}</strong></p>
-                        <p>Basada en: <strong>{{  distro.basedon | raw }}</strong></p>
-                    </div>
-                    <div class="col-lg-5">
-                        <p>Version: <strong>{{  distro.version | raw }}</strong></p>
-                        <p>Estado: <strong>{{  distro.status | raw }}</strong></p>
+                        <h1>{{ game.name|raw }}</h1>
                     </div>
                 </div>
 
@@ -27,92 +19,62 @@
 
             <div class="row data">
                 <div class="col-lg-2">
-                    <p><strong>Arquitecturas: </strong></p>
+                    <p><strong>Plataformas: </strong></p>
                 </div>
                 <div class="col-lg-10">
-                    {% set arquitecturas = distro.architecture|split(', ') %}
-                    {% for arquitectura in arquitecturas %}
-                    <span class="label label-primary">{{ arquitectura }}</span>
+                    {% set platforms = game.platform|split(', ') %}
+                    {% for platform in platforms %}
+                        <span class="label label-info">{{ platform }}</span>
                     {% endfor %}
                 </div>
             </div>
 
-            <div class="row data">
-                <div class="col-lg-2">
-                    <p><strong>Escritorios: </strong></p>
-                </div>
-                <div class="col-lg-10">
-                    {% set desktops = distro.desktop|split(', ') %}
-                    {% for desktop in desktops %}
-                        <span class="label label-success">{{ desktop }}</span>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="row data">
-                <div class="col-lg-2">
-                    <p><strong>Categorías: </strong></p>
-                </div>
-                <div class="col-lg-10">
-                    {% set categories = distro.category|split(', ') %}
-                    {% for category in categories %}
-                        <span class="label label-info">{{ category }}</span>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="row data">
-                <div class="col-lg-2">
-                    <p><strong>Origen: </strong></p>
-                </div>
-                <div class="col-lg-10">
-                    {% set countries = distro.origin|split(', ') %}
-                    {% for country in countries %}
-                        <span class="label label-default">{{ country }}</span>
-                    {% endfor %}
-                </div>
-            </div>
             <div class="row data">
                 <div class="col-lg-2">
                     <p><strong>Web: </strong></p>
                 </div>
                 <div class="col-lg-10">
-                    <a href="{{ distro.web }}" target="_blank">{{ distro.name }} Sitio oficial</a>
+                    <a href="{{ game.web }}" target="_blank">{{ game.name }} Sitio oficial</a>
                 </div>
             </div>
+
             <div class="row data">
                 <div class="col-lg-2">
                     <p><strong>Documentacion: </strong></p>
                 </div>
                 <div class="col-lg-10">
-                    <a href="{{ distro.doc }}" target="_blank">{{ distro.name }} Documentación</a>
+                    <a href="{{ game.doc }}" target="_blank">{{ game.name }} Documentación</a>
                 </div>
             </div>
+
             <div class="row data">
                 <div class="col-lg-2">
                     <p><strong>Foros: </strong></p>
                 </div>
                 <div class="col-lg-10">
-                    <a href="{{ distro.forums }}" target="_blank">{{ distro.name }} Foros</a>
+                    <a href="{{ game.forums }}" target="_blank">{{ game.name }} Foros</a>
                 </div>
             </div>
+
             <div class="row data">
                 <div class="col-lg-2">
                     <p><strong>Error Tracker: </strong></p>
                 </div>
                 <div class="col-lg-10">
-                    <a href="{{ distro.error_tracker }}" target="_blank">{{ distro.name }} Errores</a>
+                    <a href="{{ game.error_tracker }}" target="_blank">{{ game.name }} Errores</a>
                 </div>
             </div>
+
             <hr>
             <div class="row data">
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">Descripción</div>
-                        <div class="panel-body">{{ distro.description }}</div>
+                        <div class="panel-body">{{ game.description }}</div>
                     </div>
                 </div>
             </div>
+
             <div class="row data">
                 <div class="col-lg-12">
                     <form class="form-comment" method="POST" action="">
@@ -144,6 +106,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-4">
             <h2>Opiniones de los usuarios</h2>
             {% if comments|length == 0 %}
@@ -155,14 +118,6 @@
                 {% endfor %}
             {% endif %}
         </div>
-
     </div>
-
-
-
-
-
 </div>
-
 {% endblock %}
-

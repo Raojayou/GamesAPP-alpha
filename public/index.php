@@ -17,8 +17,8 @@ $baseDir = str_replace(
 $baseUrl = "http://" . $_SERVER['HTTP_HOST'] . $baseDir;
 define('BASE_URL', $baseUrl);
 
-if(file_exists(__DIR__.'/../.env')){
-    $dotenv = new Dotenv\Dotenv(__DIR__.'/..');
+if(file_exists(__DIR__.'/../env')){
+    $dotenv = new Dotenv\Dotenv(__DIR__.'/..','env');
     $dotenv->load();
 }
 
@@ -28,6 +28,7 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => getenv('DB_HOST'),
+    'port'      => getenv('DB_PORT'),
     'database'  => getenv('DB_NAME'),
     'username'  => getenv('DB_USER'),
     'password'  => getenv('DB_PASS'),
@@ -52,11 +53,11 @@ $router->filter('auth', function(){
 });
 
 $router->group(['before' => 'auth'], function ($router){
-    $router->get('/distros/new', ['\App\Controllers\DistrosController', 'getNew']);
-    $router->post('/distros/new', ['\App\Controllers\DistrosController', 'postNew']);
-    $router->get('/distros/edit/{id}', ['\App\Controllers\DistrosController', 'getEdit']);
-    $router->put('/distros/edit/{id}', ['\App\Controllers\DistrosController', 'putEdit']);
-    $router->delete('/distros/', ['\App\Controllers\DistrosController', 'deleteIndex']);
+    $router->get('/games/new', ['\App\Controllers\GamesController', 'getNew']);
+    $router->post('/games/new', ['\App\Controllers\GamesController', 'postNew']);
+    $router->get('/games/edit/{id}', ['\App\Controllers\GamesController', 'getEdit']);
+    $router->put('/games/edit/{id}', ['\App\Controllers\GamesController', 'putEdit']);
+    $router->delete('/games/', ['\App\Controllers\GamesController', 'deleteIndex']);
     $router->get('/logout', ['\App\Controllers\HomeController', 'getLogout']);
 });
 
@@ -78,8 +79,8 @@ $router->group(['before' => 'noAuth'], function ($router){
 
 // Rutas sin filtros
 $router->get('/',['\App\Controllers\HomeController', 'getIndex']);
-$router->get('/distros/{id}', ['\App\Controllers\DistrosController', 'getIndex']);
-$router->post('/distros/{id}', ['\App\Controllers\DistrosController', 'postIndex']);
+$router->get('/games/{id}', ['\App\Controllers\GamesController', 'getIndex']);
+$router->post('/games/{id}', ['\App\Controllers\GamesController', 'postIndex']);
 $router->controller('/api', App\Controllers\ApiController::class);
 
 $dispatcher = new Phroute\Phroute\Dispatcher($router->getData());

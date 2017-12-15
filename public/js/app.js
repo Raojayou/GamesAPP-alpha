@@ -1,6 +1,6 @@
-function deleteDistro(id) {
+function deleteGame(id) {
     event.preventDefault(); // prevent el submit del formulario
-    var form = document.getElementById('deleteDistro-'+id)
+        var form = document.getElementById('deleteGame-'+id)
     swal({
         title: '¿Estás seguro?',
         text: "No podrás deshacer esta operación",
@@ -10,7 +10,7 @@ function deleteDistro(id) {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Borrar',
     }).then((result) => {
-        if (result.value) {
+        if (result.value){
             form.submit()
         }
     })

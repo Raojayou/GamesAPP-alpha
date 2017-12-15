@@ -1,0 +1,90 @@
+{% extends "layout.twig" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ '' | url }}css/bootstrap-tokenfield.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ webInfo.h1 }}</h1>
+    <form method="post">
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group  {%  if errors['name'] %}has-error{% endif %}">
+                    <label for="inputName">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nombre del Juego" value="{{ game.name }}">
+                </div>
+                {{ generateAlert(errors, 'name') }}
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="inputImage">Imagen</label>
+                    <input type="text" class="form-control" id="inputImage" name="image" placeholder="URL - Imagen del Juego" value="{{ game.image }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group {% if errors['platform'] %}has-error{%  endif %}">
+                    <label for="inputOsType">Plataforma</label>
+                    {{ generateSelect(['PC', 'PS4', 'Xbox One','Switch', 'Other'], game['platform'], 'platform', false) }}
+                </div>
+                {{  generateAlert(errors, 'platform') }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="form-group {% if errors['web']['required'] %}has-error{% endif %}">
+                    <label for="inputWeb">Web</label>
+                    <input type="text" class="form-control" id="inputWeb" name="web"
+                           placeholder="Web Oficial del Juego" value="{{ game.web }}">
+                </div>
+                {{ generateAlert(errors, 'web') }}
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="inputDoc">Doc</label>
+                    <input type="text" class="form-control" id="inputDoc" name="doc"
+                           placeholder="Documentación Oficial del Juego" value="{{ game.doc }}">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="inputForum">Foros</label>
+                    <input type="text" class="form-control" id="inputForum" name="forum"
+                           placeholder="Foro Oficial del Juego" value="{{ game.forums }}">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="error_tracker">Error Tracker</label>
+                    <input type="text" class="form-control" id="error_tracker" name="error_tracker"
+                           placeholder="Error Tracker Oficial del Juego" value="{{ game.error_tracker }}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+
+        <div class="form-group {% if errors['description'] %}has-error{% endif %}">
+            <label for="inputDescription">Descripción</label>
+            <textarea class="form-control" name="description" id="inputDescription" rows="5">{{ game.description }}</textarea>
+        </div>
+        {{ generateAlert(errors, 'description') }}
+
+        <input type="hidden" name="_method" value="{{ webInfo.method }}">
+        <button type="submit" class="btn btn-default">{{ webInfo.submit }}</button>
+    </form>
+</div><!-- /.container -->
+{% endblock %}
+
+{% block js %}
+    <script src="{{ '' | url }}js/bloodhound/bloodhound.js"></script>
+    <script src="{{ '' | url }}js/typehead/typehead.js"></script>
+    <script src="{{ '' | url }}js/tokenfield/bootstrap-tokenfield.min.js"></script>
+    <script src="{{ '' | url }}js/tokenfield/tokenfield-gamesapp.js"></script>
+{% endblock %}
