@@ -36,3 +36,4 @@ Para ir a la página de inicio debes pulsar en **GamesAPP** que está en el men�
     - Finalmente está el sistema de cerrar sesión(Logout) en el menú desplegable.
     - Cierra la sesion utilizada para usar la aplicación.
 ***"# GameAPP-alpha" 
+"# GameAPP-alpha" 
