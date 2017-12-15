@@ -26,7 +26,7 @@ Para ir a la página de inicio debes pulsar en **GamesAPP** que está en el men�
 ***
 ***
     - Si el usuario hace click en un juego, obtendrá toda la información de ese juego.
-    - El usuario podrá editar (icono del lápiz) y/o borrar (icono del cubo de basura).
+    - El usuario podrá editar (icono del lápiz) y/o borrar (icono del cubo de basura) un juego.
 ***
 ***
     - A continuación está el sistema de comentarios.
