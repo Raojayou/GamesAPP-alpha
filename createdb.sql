@@ -87,6 +87,27 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES
   (8, 'Josan', 'jose_10tonio@coldmail.com', '$2y$10$ftG6n.AecTx55kb41WPNcOwzLI4TDpZccPFD8TlQ2dO.ist/DN9gm', '2017-12-05 22:06:44', '2017-12-05 22:06:44');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invitations`
+--
+
+CREATE TABLE `invitations` (
+  `id` int(11) NOT NULL,
+  `used` tinyint(0) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `invitations`
+--
+
+INSERT INTO `invitations` (`id`, `email`, `used`, `created_at`, `updated_at`) VALUES
+  (14,'jose_10tonio@coldmail.com','' , '0000-00-00 00:00:00', '2017-12-19 00:00:00');
+
 --
 -- Indexes for dumped tables
 --
@@ -110,6 +131,12 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `invitations`
+--
+ALTER TABLE `invitations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -128,3 +155,8 @@ ALTER TABLE `game`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `invitations`
+--
+ALTER TABLE `invitations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
